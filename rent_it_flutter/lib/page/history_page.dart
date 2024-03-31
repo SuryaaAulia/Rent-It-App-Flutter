@@ -16,6 +16,7 @@ class HistoryPage extends StatelessWidget {
           child: Text(
             'History',
             style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
+            
           ),
         ),
         backgroundColor: Colors.transparent,
