@@ -5,15 +5,37 @@ import 'package:rent_it_flutter/widgets/text_overlay.dart';
 import 'package:rent_it_flutter/widgets/top_widget.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late double screenWidth;
+  late double screenHeight;
+  late Color rGray;
+
+  int activeIndex = 0;
+  final controller = CarouselController();
+  final urlImages = [
+    'assets/images/ged_sc.jpg',
+    'assets/images/ged_damar.jpg',
+    'assets/images/GSG.jpg',
+    'assets/images/avatar.jpg',
+    'assets/images/lap_tennis.jpg',
+  ];
+  @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-    const Color rGray = Color.fromRGBO(236, 232, 232, 1);
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+    const rGray = Color.fromRGBO(236, 232, 232, 1);
+
     return Scaffold(
       backgroundColor: rGray,
       body: SingleChildScrollView(
@@ -43,14 +65,18 @@ class HomePage extends StatelessWidget {
                   children: [
                     ROverlayImage(
                       screenWidth: screenWidth * 0.9,
+                      screenHeight: screenHeight * 0.25,
                       image: const AssetImage('assets/images/ged_damar.jpg'),
                     ),
                     RTopTextOverlay(
-                        screenWidth: screenWidth,
-                        color: rGray,
-                        tanggal: 'Hari Ini',
-                        waktu: '13.00 - 14.00'),
+                      icon: Icons.more_horiz_rounded,
+                      screenWidth: screenWidth,
+                      color: rGray,
+                      tanggal: 'Hari Ini',
+                      waktu: '13.00 - 14.00',
+                    ),
                     const RBottomTextOverlay(
+                      sizeNamaGedung: 20,
                       color: rGray,
                       namaGedung: 'Gedung Damar',
                       descGedung:
@@ -76,26 +102,35 @@ class HomePage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    width: screenWidth * 0.4,
-                    height: screenHeight * 0.2,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black),
-                    child: const Image(
-                        image: AssetImage('assets/images/ged_damar.jpg')),
-                  ),
-                  Container(
-                    width: screenWidth * 0.4,
-                    height: screenHeight * 0.2,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black),
-                  ),
-                ],
+              child: SizedBox(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CarouselSlider.builder(
+                        carouselController: controller,
+                        itemCount: urlImages.length,
+                        itemBuilder: (context, index, realIndex) {
+                          final urlImage = urlImages[index];
+                          return buildImage(urlImage, index, screenWidth * 0.9,
+                              screenHeight * 0.4);
+                        },
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          height: 200,
+                          enableInfiniteScroll: false,
+                          autoPlayAnimationDuration: const Duration(seconds: 2),
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) =>
+                              setState(() => activeIndex = index),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    buildIndicator(),
+                  ],
+                ),
               ),
             ),
           ],
@@ -104,4 +139,39 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: const RBottomNavbar(),
     );
   }
+
+  Widget buildIndicator() => AnimatedSmoothIndicator(
+        onDotClicked: animateToSlide,
+        effect: const ExpandingDotsEffect(
+            dotWidth: 10,
+            dotHeight: 10,
+            activeDotColor: Color.fromRGBO(84, 78, 78, 1)),
+        activeIndex: activeIndex,
+        count: urlImages.length,
+      );
+
+  void animateToSlide(int index) => controller.animateToPage(index);
 }
+
+Widget buildImage(String image, int index, double width, double height) =>
+    SizedBox(
+        width: width,
+        child: Stack(
+          children: [
+            ROverlayImage(
+              image: AssetImage(image),
+              screenHeight: height,
+              screenWidth: width,
+            ),
+            RTopTextOverlay(
+              color: const Color.fromRGBO(236, 232, 232, 1),
+              screenWidth: width,
+              icon: Icons.info_outline,
+            ),
+            const RBottomTextOverlay(
+              color: Color.fromRGBO(236, 232, 232, 1),
+              namaGedung: 'Gedung Serbaguna',
+              sizeNamaGedung: 14,
+            )
+          ],
+        ));

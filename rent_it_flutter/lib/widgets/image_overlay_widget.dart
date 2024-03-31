@@ -4,17 +4,19 @@ class ROverlayImage extends StatelessWidget {
   const ROverlayImage({
     super.key,
     required this.screenWidth,
+    required this.screenHeight,
     required this.image,
   });
 
   final double screenWidth;
+  final double screenHeight;
   final AssetImage image;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth,
-      height: 200,
+      height: screenHeight,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.black,

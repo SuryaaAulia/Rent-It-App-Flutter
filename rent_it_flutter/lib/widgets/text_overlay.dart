@@ -6,12 +6,14 @@ class RBottomTextOverlay extends StatelessWidget {
     super.key,
     required this.color,
     required this.namaGedung,
-    required this.descGedung,
+    this.descGedung,
+    required this.sizeNamaGedung,
   });
 
   final Color color;
   final String namaGedung;
-  final String descGedung;
+  final String? descGedung;
+  final double sizeNamaGedung;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,14 @@ class RBottomTextOverlay extends StatelessWidget {
             children: [
               Text(
                 namaGedung,
-                style: TextStyle(color: color, fontSize: 20),
+                style: TextStyle(color: color, fontSize: sizeNamaGedung),
               ),
-              Text(
-                descGedung,
-                style: TextStyle(
-                    color: color, fontSize: 11, fontWeight: FontWeight.w200),
-              )
+              if (descGedung != null) // Add a condition to check for null
+                Text(
+                  descGedung!,
+                  style: TextStyle(
+                      color: color, fontSize: 11, fontWeight: FontWeight.w200),
+                )
             ],
           ),
         ),
@@ -47,14 +50,16 @@ class RTopTextOverlay extends StatelessWidget {
     super.key,
     required this.screenWidth,
     required this.color,
-    required this.tanggal,
-    required this.waktu,
+    this.tanggal,
+    this.waktu,
+    required this.icon,
   });
 
   final double screenWidth;
   final Color color;
-  final String tanggal;
-  final String waktu;
+  final IconData icon;
+  final String? tanggal;
+  final String? waktu;
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +73,23 @@ class RTopTextOverlay extends StatelessWidget {
             RIconBorder(
                 borderColor: Colors.transparent,
                 iconColor: color,
-                iconType: Icons.more_horiz,
+                iconType: icon,
                 borderStyle: BoxShape.rectangle),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                Text(tanggal,
-                    style: TextStyle(
-                        color: color,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-                Text(waktu,
-                    style: TextStyle(
-                        color: color,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w200)),
+                if (tanggal != null)
+                  Text(tanggal!,
+                      style: TextStyle(
+                          color: color,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                if (waktu != null)
+                  Text(waktu!,
+                      style: TextStyle(
+                          color: color,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w200)),
               ],
             ),
           ],
