@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
 
 class RWallet extends StatelessWidget {
-  RWallet({super.key});
+  const RWallet({super.key});
 
   final rWhite = const Color.fromRGBO(236, 232, 232, 1);
   final rRed = const Color.fromRGBO(159, 21, 33, 1);
@@ -41,17 +42,17 @@ class RWallet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromRGBO(207, 207, 207, 1)),
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(Icons.account_balance_wallet_outlined,
-                          color: rRed, size: 25),
-                    ),
+                    RIconBorder(
+                        borderColor: const Color.fromRGBO(207, 207, 207, 1),
+                        iconColor: rRed,
+                        iconType: Icons.account_balance_wallet_outlined,
+                        borderStyle: BoxShape.circle),
                     const Text(
                       'Rp50.000',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color.fromRGBO(84, 78, 78, 1)),
                     ),
                   ],
                 ),
@@ -63,10 +64,12 @@ class RWallet extends StatelessWidget {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        Icon(
-                          Icons.upgrade,
-                          size: 25,
-                          color: rRed,
+                        RIconBorder(
+                          borderColor: rRed,
+                          iconColor: rWhite,
+                          iconType: Icons.upgrade,
+                          borderStyle: BoxShape.rectangle,
+                          radius: const BorderRadius.all(Radius.circular(4)),
                         ),
                         Text(
                           'Bayar',
@@ -76,7 +79,12 @@ class RWallet extends StatelessWidget {
                     ),
                     Column(
                       children: <Widget>[
-                        Icon(Icons.add, size: 25, color: rRed),
+                        RIconBorder(
+                            iconType: Icons.add,
+                            borderColor: rRed,
+                            iconColor: rWhite,
+                            borderStyle: BoxShape.rectangle,
+                            radius: const BorderRadius.all(Radius.circular(4))),
                         Text('Top-Up',
                             style: TextStyle(fontSize: 9, color: rRed))
                       ],

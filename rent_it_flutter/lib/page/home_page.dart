@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            RShapeTopWidget(
+            const RShapeTopWidget(
               child: Column(
                 children: <Widget>[RAppBar(), RWallet()],
               ),
@@ -70,6 +70,8 @@ class HomePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.black),
+                    child:
+                        Image(image: AssetImage('assets/images/ged_damar.jpg')),
                   ),
                   Container(
                     width: screenWidth * 0.4,
