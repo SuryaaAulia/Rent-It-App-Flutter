@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-class RAppBar extends StatelessWidget implements PreferredSizeWidget {
+class RAppBar extends StatelessWidget {
   const RAppBar({super.key});
-  final double height = 200;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.fromLTRB(5, 35, 5, 20),
       child: AppBar(
         backgroundColor: Colors.transparent,
         title: const Column(
@@ -33,7 +32,4 @@ class RAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 }

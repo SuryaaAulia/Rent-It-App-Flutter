@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class RWallet extends StatelessWidget {
-  const RWallet({super.key});
+  RWallet({super.key});
+
+  final rWhite = const Color.fromRGBO(236, 232, 232, 1);
+  final rRed = const Color.fromRGBO(159, 21, 33, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -10,14 +13,14 @@ class RWallet extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(40, 30, 40, 10),
+          margin: const EdgeInsets.fromLTRB(10, 30, 10, 10),
           width: screenWidth,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
-              color: const Color.fromRGBO(236, 232, 232, 1),
+              color: rWhite,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: const Color.fromRGBO(236, 232, 232, 1),
+                color: rWhite,
               ),
               boxShadow: [
                 const BoxShadow(
@@ -33,34 +36,53 @@ class RWallet extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromRGBO(207, 207, 207, 1)),
-                padding: const EdgeInsets.all(4),
-                child: const Icon(Icons.account_balance_wallet_outlined,
-                    color: Color.fromRGBO(159, 21, 33, 1), size: 25),
+              SizedBox(
+                width: screenWidth * 0.35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(207, 207, 207, 1)),
+                      padding: const EdgeInsets.all(4),
+                      child: Icon(Icons.account_balance_wallet_outlined,
+                          color: rRed, size: 25),
+                    ),
+                    const Text(
+                      'Rp50.000',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-              const Text('Rp50.000'),
-              const Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.upgrade,
-                    size: 25,
-                    color: Color.fromRGBO(159, 21, 33, 1),
-                  ),
-                  Text(
-                    'Bayar',
-                    style: TextStyle(fontSize: 9),
-                  )
-                ],
-              ),
-              const Column(
-                children: <Widget>[
-                  Icon(Icons.add,
-                      size: 25, color: Color.fromRGBO(159, 21, 33, 1)),
-                  Text('Top-Up', style: TextStyle(fontSize: 9))
-                ],
+              SizedBox(
+                width: screenWidth * 0.35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.upgrade,
+                          size: 25,
+                          color: rRed,
+                        ),
+                        Text(
+                          'Bayar',
+                          style: TextStyle(fontSize: 9, color: rRed),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.add, size: 25, color: rRed),
+                        Text('Top-Up',
+                            style: TextStyle(fontSize: 9, color: rRed))
+                      ],
+                    )
+                  ],
+                ),
               )
             ],
           ),
