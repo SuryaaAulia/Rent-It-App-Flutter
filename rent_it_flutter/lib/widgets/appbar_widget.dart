@@ -27,7 +27,7 @@ class RAppBar extends StatelessWidget {
         actions: const [
           CircleAvatar(
             radius: 45,
-            backgroundImage: AssetImage('assets/images/rimuri.png'),
+            backgroundImage: AssetImage('assets/images/avatar.jpg'),
             backgroundColor: Colors.black,
           )
         ],

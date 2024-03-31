@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/widgets/bottom_navbar_widget.dart';
+import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
+import 'package:rent_it_flutter/widgets/text_overlay.dart';
 import 'package:rent_it_flutter/widgets/top_widget.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
@@ -11,8 +13,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    const Color rGray = Color.fromRGBO(236, 232, 232, 1);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(236, 232, 232, 1),
+      backgroundColor: rGray,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,12 +39,24 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: screenWidth * 0.9,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black),
+                Stack(
+                  children: [
+                    ROverlayImage(
+                      screenWidth: screenWidth * 0.9,
+                      image: const AssetImage('assets/images/ged_damar.jpg'),
+                    ),
+                    RTopTextOverlay(
+                        screenWidth: screenWidth,
+                        color: rGray,
+                        tanggal: 'Hari Ini',
+                        waktu: '13.00 - 14.00'),
+                    const RBottomTextOverlay(
+                      color: rGray,
+                      namaGedung: 'Gedung Damar',
+                      descGedung:
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -70,8 +85,8 @@ class HomePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.black),
-                    child:
-                        Image(image: AssetImage('assets/images/ged_damar.jpg')),
+                    child: const Image(
+                        image: AssetImage('assets/images/ged_damar.jpg')),
                   ),
                   Container(
                     width: screenWidth * 0.4,
