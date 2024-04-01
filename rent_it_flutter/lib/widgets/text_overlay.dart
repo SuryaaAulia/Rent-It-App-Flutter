@@ -52,12 +52,12 @@ class RTopTextOverlay extends StatelessWidget {
     required this.color,
     this.tanggal,
     this.waktu,
-    required this.icon,
+    this.icon,
   });
 
   final double screenWidth;
   final Color color;
-  final IconData icon;
+  final IconData? icon;
   final String? tanggal;
   final String? waktu;
 
@@ -68,13 +68,16 @@ class RTopTextOverlay extends StatelessWidget {
         top: 5,
         right: 10,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: icon != null
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.end,
           children: [
-            RIconBorder(
-                borderColor: Colors.transparent,
-                iconColor: color,
-                iconType: icon,
-                borderStyle: BoxShape.rectangle),
+            if (icon != null)
+              RIconBorder(
+                  borderColor: Colors.transparent,
+                  iconColor: color,
+                  iconType: icon!,
+                  borderStyle: BoxShape.rectangle),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[

@@ -16,7 +16,6 @@ class HistoryPage extends StatelessWidget {
           child: Text(
             'History',
             style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
-            
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -44,7 +43,6 @@ class HistoryPage extends StatelessWidget {
                   image: const AssetImage('assets/images/ged_damar.jpg'),
                 ),
                 RTopTextOverlay(
-                  icon: Icons.more_horiz_rounded,
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',
@@ -68,7 +66,6 @@ class HistoryPage extends StatelessWidget {
                   image: const AssetImage('assets/images/ged_damar.jpg'),
                 ),
                 RTopTextOverlay(
-                  icon: Icons.more_horiz_rounded,
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',
