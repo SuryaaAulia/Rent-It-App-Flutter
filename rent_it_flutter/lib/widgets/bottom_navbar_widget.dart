@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/page/history_page.dart'; // Import your HistoryPage
 
 class RBottomNavbar extends StatelessWidget {
-  const RBottomNavbar({Key? key});
+  const RBottomNavbar({super.key, Key});
 
   @override
   Widget build(BuildContext context) {

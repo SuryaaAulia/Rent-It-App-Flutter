@@ -43,6 +43,7 @@ class HistoryPage extends StatelessWidget {
                   image: const AssetImage('assets/images/ged_damar.jpg'),
                 ),
                 RTopTextOverlay(
+                  borderStyle: BoxShape.rectangle,
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',
@@ -66,6 +67,7 @@ class HistoryPage extends StatelessWidget {
                   image: const AssetImage('assets/images/ged_damar.jpg'),
                 ),
                 RTopTextOverlay(
+                  borderStyle: BoxShape.rectangle,
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',

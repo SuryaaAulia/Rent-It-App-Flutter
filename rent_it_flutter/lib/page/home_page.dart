@@ -69,7 +69,10 @@ class _HomePageState extends State<HomePage> {
                       image: const AssetImage('assets/images/ged_damar.jpg'),
                     ),
                     RTopTextOverlay(
+                      borderStyle: BoxShape.circle,
                       icon: Icons.more_horiz_rounded,
+                      border: Border.all(
+                          style: BorderStyle.solid, color: rGray, width: 2),
                       screenWidth: screenWidth,
                       color: rGray,
                       tanggal: 'Hari Ini',
@@ -164,6 +167,7 @@ Widget buildImage(String image, int index, double width, double height) =>
               screenWidth: width,
             ),
             RTopTextOverlay(
+              borderStyle: BoxShape.circle,
               color: const Color.fromRGBO(236, 232, 232, 1),
               screenWidth: width,
               icon: Icons.info_outline,
