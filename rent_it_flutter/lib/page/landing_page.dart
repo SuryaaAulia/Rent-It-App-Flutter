@@ -1,7 +1,8 @@
 // import 'package:flutter/material.dart';
-// import 'package:rent_it_flutter/page/home_page.dart';
+// import 'package:rent_it_flutter/page/login_page.dart';
+// import 'package:rent_it_flutter/widgets/custom_shapes_login.dart';
 
-// class LoginPage extends StatelessWidget {
+// class LandingPage extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -14,32 +15,11 @@
 //           children: <Widget>[
 //             Padding(
 //               padding: const EdgeInsets.only(
-//                   left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
+//                   left: 20.0, right: 20.0, top: 8.0, bottom: 20.0),
 //               child: Image(
-//                 image: AssetImage(
-//                     'assets/Logo_Rentit.png'), // Sesuaikan dengan path gambar Anda
-//                 width: 50, // Sesuaikan dengan lebar yang diinginkan
-//                 height: 50, // Sesuaikan dengan tinggi yang diinginkan
-//                 // Jika Anda ingin menambahkan padding di sekitar gambar, tambahkan padding di sini
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(
-//                   left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
-//               child: TextField(
-//                 decoration: InputDecoration(
-//                   labelText: 'Email',
-//                 ),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(
-//                   left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
-//               child: TextField(
-//                 obscureText: true,
-//                 decoration: InputDecoration(
-//                   labelText: 'Password',
-//                 ),
+//                 image: AssetImage('assets/Logo_Rentit.png'),
+//                 width: 50,
+//                 height: 50,
 //               ),
 //             ),
 //             Padding(
@@ -50,7 +30,7 @@
 //                   // Navigasi ke halaman beranda jika login berhasil
 //                   Navigator.pushReplacement(
 //                     context,
-//                     MaterialPageRoute(builder: (context) => HomePage()),
+//                     MaterialPageRoute(builder: (context) => LoginPage()),
 //                   );
 //                 },
 //                 child: Text(
@@ -70,10 +50,10 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/home_page.dart';
-import 'package:rent_it_flutter/widgets/custom_shapes_login.dart'; // Import custom clipper
+import 'package:rent_it_flutter/page/login_page.dart';
+import 'package:rent_it_flutter/widgets/custom_shapes_login.dart';
 
-class LoginPage extends StatelessWidget {
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,9 +61,10 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: [
           ClipPath(
-            clipper: RClipPath2(), // Menggunakan custom clipper RClipPath2
+            clipper: RClipPath2(),
             child: Container(
-              color: Color.fromARGB(255, 226, 42, 50), // Warna dari RClipPath2
+              color: Color.fromARGB(
+                  255, 226, 42, 50), // Gunakan warna dari RClipPath2
               height: MediaQuery.of(context).size.height * 0.5,
             ),
           ),
@@ -95,32 +76,11 @@ class LoginPage extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
+                      left: 20.0, right: 20.0, top: 8.0, bottom: 20.0),
                   child: Image(
-                    image: AssetImage(
-                        'assets/Logo_Rentit.png'), // Sesuaikan dengan path gambar Anda
-                    width: 50, // Sesuaikan dengan lebar yang diinginkan
-                    height: 50, // Sesuaikan dengan tinggi yang diinginkan
-                    // Jika Anda ingin menambahkan padding di sekitar gambar, tambahkan padding di sini
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                    ),
+                    image: AssetImage('assets/Logo_Rentit.png'),
+                    width: 50,
+                    height: 50,
                   ),
                 ),
                 Padding(
@@ -131,7 +91,7 @@ class LoginPage extends StatelessWidget {
                       // Navigasi ke halaman beranda jika login berhasil
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
