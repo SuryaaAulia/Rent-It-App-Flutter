@@ -47,7 +47,7 @@ class HistoryPage extends StatelessWidget {
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',
-                  waktu: '13.00 - 14.00',
+                  waktu: '11.00 - 12.00',
                 ),
                 const RBottomTextOverlay(
                   sizeNamaGedung: 20,
@@ -64,19 +64,19 @@ class HistoryPage extends StatelessWidget {
                 ROverlayImage(
                   screenWidth: screenWidth * 0.9,
                   screenHeight: screenHeight * 0.25,
-                  image: const AssetImage('assets/images/ged_damar.jpg'),
+                  image: const AssetImage('assets/images/lap_tennis.jpg'),
                 ),
                 RTopTextOverlay(
                   borderStyle: BoxShape.rectangle,
                   screenWidth: screenWidth,
                   color: rGray,
                   tanggal: 'Hari Ini',
-                  waktu: '13.00 - 14.00',
+                  waktu: '16.00 - 17.00',
                 ),
                 const RBottomTextOverlay(
                   sizeNamaGedung: 20,
                   color: rGray,
-                  namaGedung: 'Gedung Damar',
+                  namaGedung: 'Lapangan Tenis',
                   descGedung:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
                 ),
