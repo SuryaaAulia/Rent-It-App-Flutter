@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/page/home_page.dart';
-import 'package:rent_it_flutter/widgets/top_widget.dart';
 
 class LoadingScreen extends StatefulWidget {
   final String nama;
@@ -19,8 +18,8 @@ class LoadingScreen extends StatefulWidget {
     required this.phoneNumber,
     required this.tempatDipilih,
     required this.hargaTempat,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -47,7 +46,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 112, 38, 38),
+      backgroundColor: const Color.fromARGB(255, 112, 38, 38),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,16 +54,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
           const RAppBar(),
           const SizedBox(height: 50.0),
           AnimatedContainer(
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             curve: Curves.easeInOut,
             height: _isLoading ? 0 : 0,
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           ),
           const SizedBox(height: 20.0),
           AnimatedOpacity(
             opacity: _isLoading ? 1.0 : 0.0,
-            duration: Duration(seconds: 1),
-            child: Text(
+            duration: const Duration(seconds: 1),
+            child: const Text(
               'Sedang memproses permintaan...',
               style: TextStyle(
                 fontSize: 18.0,
@@ -75,42 +74,42 @@ class _LoadingScreenState extends State<LoadingScreen> {
           const SizedBox(height: 20.0),
           AnimatedOpacity(
             opacity: _isLoading ? 1.0 : 0.0,
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             child: Column(
               children: [
                 Text(
                   'Nama: ${widget.nama}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   'NIM: ${widget.nim}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   'Email: ${widget.email}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   'Nomor Telepon: ${widget.phoneNumber}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   'Tempat yang dipilih: ${widget.tempatDipilih}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   'Harga Tempat: Rp ${widget.hargaTempat}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
