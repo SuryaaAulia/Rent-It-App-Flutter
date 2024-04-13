@@ -14,11 +14,11 @@ class RWallet extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-          width: screenWidth,
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+          margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+          width: screenWidth * 0.9,
+          padding: const EdgeInsets.fromLTRB(20, 5, 10, 5),
           decoration: BoxDecoration(
               color: rWhite,
               borderRadius: BorderRadius.circular(15),
