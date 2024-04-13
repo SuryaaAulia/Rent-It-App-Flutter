@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/history_page.dart'; // Import your HistoryPage
+import 'package:rent_it_flutter/page/history_page.dart';
+import 'package:rent_it_flutter/page/rent_page.dart'; // Import your HistoryPage
 
 class RBottomNavbar extends StatelessWidget {
   const RBottomNavbar({super.key, Key});
@@ -28,7 +29,10 @@ class RBottomNavbar extends StatelessWidget {
           case 0:
             break;
           case 1:
-            break;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RentPage()),
+            );
           case 2:
             Navigator.push(
               context,
