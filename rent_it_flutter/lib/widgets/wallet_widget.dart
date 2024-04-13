@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
 
 class RWallet extends StatelessWidget {
   const RWallet({super.key});
+
+  final rWhite = const Color.fromRGBO(236, 232, 232, 1);
+  final rRed = const Color.fromRGBO(159, 21, 33, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -10,14 +14,14 @@ class RWallet extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(40, 30, 40, 10),
+          margin: const EdgeInsets.fromLTRB(10, 30, 10, 10),
           width: screenWidth,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           decoration: BoxDecoration(
-              color: const Color.fromRGBO(236, 232, 232, 1),
+              color: rWhite,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: const Color.fromRGBO(236, 232, 232, 1),
+                color: rWhite,
               ),
               boxShadow: [
                 const BoxShadow(
@@ -33,34 +37,60 @@ class RWallet extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromRGBO(207, 207, 207, 1)),
-                padding: const EdgeInsets.all(4),
-                child: const Icon(Icons.account_balance_wallet_outlined,
-                    color: Color.fromRGBO(159, 21, 33, 1), size: 25),
+              SizedBox(
+                width: screenWidth * 0.35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    RIconBorder(
+                        borderColor: const Color.fromRGBO(207, 207, 207, 1),
+                        iconColor: rRed,
+                        iconType: Icons.account_balance_wallet_outlined,
+                        borderStyle: BoxShape.circle),
+                    const Text(
+                      'Rp50.000',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color.fromRGBO(84, 78, 78, 1)),
+                    ),
+                  ],
+                ),
               ),
-              const Text('Rp50.000'),
-              const Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.upgrade,
-                    size: 25,
-                    color: Color.fromRGBO(159, 21, 33, 1),
-                  ),
-                  Text(
-                    'Bayar',
-                    style: TextStyle(fontSize: 9),
-                  )
-                ],
-              ),
-              const Column(
-                children: <Widget>[
-                  Icon(Icons.add,
-                      size: 25, color: Color.fromRGBO(159, 21, 33, 1)),
-                  Text('Top-Up', style: TextStyle(fontSize: 9))
-                ],
+              SizedBox(
+                width: screenWidth * 0.35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        RIconBorder(
+                          borderColor: rRed,
+                          iconColor: rWhite,
+                          iconType: Icons.upgrade,
+                          borderStyle: BoxShape.rectangle,
+                          radius: const BorderRadius.all(Radius.circular(4)),
+                        ),
+                        Text(
+                          'Bayar',
+                          style: TextStyle(fontSize: 9, color: rRed),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        RIconBorder(
+                            iconType: Icons.add,
+                            borderColor: rRed,
+                            iconColor: rWhite,
+                            borderStyle: BoxShape.rectangle,
+                            radius: const BorderRadius.all(Radius.circular(4))),
+                        Text('Top-Up',
+                            style: TextStyle(fontSize: 9, color: rRed))
+                      ],
+                    )
+                  ],
+                ),
               )
             ],
           ),

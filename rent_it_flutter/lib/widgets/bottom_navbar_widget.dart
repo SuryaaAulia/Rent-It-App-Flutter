@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/page/history_page.dart'; // Import your HistoryPage
 
 class RBottomNavbar extends StatelessWidget {
-  const RBottomNavbar({super.key});
+  const RBottomNavbar({super.key, Key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +11,32 @@ class RBottomNavbar extends StatelessWidget {
       selectedItemColor: const Color.fromRGBO(159, 21, 33, 1),
       items: const [
         BottomNavigationBarItem(
-            label: "Notification",
-            icon: Icon(Icons.notifications_active_outlined)),
+          label: "Notification",
+          icon: Icon(Icons.notifications_active_outlined),
+        ),
         BottomNavigationBarItem(
-            label: "BOOK NOW!", icon: Icon(Icons.calendar_today_outlined)),
-        BottomNavigationBarItem(label: "History", icon: Icon(Icons.history)),
+          label: "BOOK NOW!",
+          icon: Icon(Icons.calendar_today_outlined),
+        ),
+        BottomNavigationBarItem(
+          label: "History",
+          icon: Icon(Icons.history),
+        ),
       ],
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            break;
+          case 1:
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HistoryPage()),
+            );
+            break;
+        }
+      },
     );
   }
 }
