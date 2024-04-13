@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/page/payment_page.dart';
+import 'package:rent_it_flutter/page/topup_page.dart';
 import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
 
 class RWallet extends StatelessWidget {
@@ -62,33 +64,54 @@ class RWallet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        RIconBorder(
-                          borderColor: rRed,
-                          iconColor: rWhite,
-                          iconType: Icons.upgrade,
-                          borderStyle: BoxShape.rectangle,
-                          radius: const BorderRadius.all(Radius.circular(4)),
-                        ),
-                        Text(
-                          'Bayar',
-                          style: TextStyle(fontSize: 9, color: rRed),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        RIconBorder(
-                            iconType: Icons.add,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaymentPage()),
+                        );
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          RIconBorder(
                             borderColor: rRed,
                             iconColor: rWhite,
+                            iconType: Icons.upgrade,
                             borderStyle: BoxShape.rectangle,
-                            radius: const BorderRadius.all(Radius.circular(4))),
-                        Text('Top-Up',
-                            style: TextStyle(fontSize: 9, color: rRed))
-                      ],
-                    )
+                            radius: const BorderRadius.all(Radius.circular(4)),
+                          ),
+                          Text(
+                            'Bayar',
+                            style: TextStyle(fontSize: 9, color: rRed),
+                          )
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TopUpPage()),
+                        );
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          RIconBorder(
+                            borderColor: rRed,
+                            iconColor: rWhite,
+                            iconType: Icons.add,
+                            borderStyle: BoxShape.rectangle,
+                            radius: const BorderRadius.all(Radius.circular(4)),
+                          ),
+                          Text(
+                            'Top-Up',
+                            style: TextStyle(fontSize: 9, color: rRed),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               )

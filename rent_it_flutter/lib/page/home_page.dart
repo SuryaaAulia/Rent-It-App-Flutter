@@ -7,9 +7,10 @@ import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -35,8 +36,7 @@ class _HomePageState extends State<HomePage> {
     screenHeight = MediaQuery.of(context).size.height;
     const rGray = Color.fromRGBO(236, 232, 232, 1);
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: rGray,
       body: SingleChildScrollView(
         child: Column(
@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: const RBottomNavbar(),
-    ));
+    );
   }
 
   Widget buildIndicator() => AnimatedSmoothIndicator(

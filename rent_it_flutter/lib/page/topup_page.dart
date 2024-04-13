@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+class TopUpPage extends StatefulWidget {
+  const TopUpPage({super.key});
 
   @override
-  _PaymentPageState createState() => _PaymentPageState();
+  _TopUpPageState createState() => _TopUpPageState();
 }
 
-class _PaymentPageState extends State<PaymentPage> {
+class _TopUpPageState extends State<TopUpPage> {
   int selectedIndex = -1; // Menyimpan indeks tombol yang dipilih
 
   @override
