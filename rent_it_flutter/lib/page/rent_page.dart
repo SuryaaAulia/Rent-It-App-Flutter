@@ -254,7 +254,7 @@ class _RentPageState extends State<RentPage> {
   /// Fungsi ini digunakan untuk mendapatkan nominal harga berdasarkan tempat yang dipilih.
   String _getNominal(String selectedValue) {
     switch (selectedValue) {
-      case 'Gedung Serbaguna':
+      case 'GSG':
         return '50.000';
       case 'Lapangan Tennis':
         return '100.000';

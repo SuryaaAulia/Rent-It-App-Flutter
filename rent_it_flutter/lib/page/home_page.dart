@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/page/facility_page.dart';
 import 'package:rent_it_flutter/widgets/bottom_navbar_widget.dart';
 import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
 import 'package:rent_it_flutter/widgets/text_overlay.dart';
@@ -89,17 +90,26 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(25, 15, 25, 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Fasilitas Yang Kami Sediakan',
                     style: TextStyle(fontSize: 20),
                   ),
-                  Text('More',
-                      style: TextStyle(color: Color.fromRGBO(159, 21, 33, 1)))
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FacilityPage()),
+                        );
+                      },
+                      child: const Text('More',
+                          style: TextStyle(
+                              color: Color.fromRGBO(159, 21, 33, 1)))),
                 ],
               ),
             ),

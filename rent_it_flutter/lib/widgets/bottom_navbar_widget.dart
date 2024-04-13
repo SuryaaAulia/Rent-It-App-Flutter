@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/page/history_page.dart';
+import 'package:rent_it_flutter/page/notification_page.dart';
 import 'package:rent_it_flutter/page/rent_page.dart'; // Import your HistoryPage
 
 class RBottomNavbar extends StatelessWidget {
@@ -27,7 +28,10 @@ class RBottomNavbar extends StatelessWidget {
       onTap: (index) {
         switch (index) {
           case 0:
-            break;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationPage()),
+            );
           case 1:
             Navigator.push(
               context,

@@ -17,7 +17,7 @@ BoxDecoration getImageRoundedWithShadowDecoration(String selectedValue) {
   String imagePath;
   switch (selectedValue) {
     case 'Gedung Serbaguna':
-      imagePath = 'assets/images/Gedung_Serbaguna.jpg';
+      imagePath = 'assets/images/GSG.jpg';
       break;
     case 'Lapangan Tennis':
       imagePath = 'assets/images/Lapangan_Tennis.jpg';
@@ -38,11 +38,11 @@ BoxDecoration getImageRoundedWithShadowDecoration(String selectedValue) {
     image: DecorationImage(
       image: AssetImage(imagePath),
       fit: BoxFit.cover,
-      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
     ),
   );
 }
-
 
 final BoxDecoration whiteRoundedWithShadowDecoration = BoxDecoration(
   color: Colors.white.withOpacity(0.8),

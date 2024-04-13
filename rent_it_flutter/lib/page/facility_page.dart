@@ -34,14 +34,14 @@ class FacilityPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 FacilityItems(
-                  image: AssetImage('assets/gedung_damar.png'),
+                  image: AssetImage('assets/images/ged_damar.jpg'),
                   title: 'Gedung Damar',
                   price: 'Rp. 100.000',
                   description:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
                 ),
                 FacilityItems(
-                  image: AssetImage('assets/gedung_damar.png'),
+                  image: AssetImage('assets/images/GSG.jpg'),
                   title: 'GSG',
                   price: 'Rp. 500.000',
                   description: 'Description 2',

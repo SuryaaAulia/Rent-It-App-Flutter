@@ -12,7 +12,7 @@ void main() {
       ),
     ),
     home: const Scaffold(
-      body: SafeArea(child: PaymentPage()),
+      body: SafeArea(child: HomePage()),
     ),
   ));
 }
