@@ -6,7 +6,8 @@ class FacilityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: const Text(
           'Facility Page',
@@ -50,7 +51,7 @@ class FacilityPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

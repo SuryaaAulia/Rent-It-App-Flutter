@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
 
@@ -14,7 +12,8 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: const Text(
           'TopUp',
@@ -198,7 +197,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget _buildTopUpButton({required String text, required int index}) {

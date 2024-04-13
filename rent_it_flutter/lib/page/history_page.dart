@@ -10,7 +10,8 @@ class HistoryPage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     const rGray = Color.fromRGBO(236, 232, 232, 1);
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -85,6 +86,6 @@ class HistoryPage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

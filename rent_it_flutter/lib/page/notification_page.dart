@@ -8,7 +8,8 @@ class NotificationPage extends StatelessWidget {
     List<NotificationItem> notifications = [
       const NotificationItem(
           icon: Icons.check_circle,
-          title: "Peminjaman kamu untuk Gedung Damar\nsudah di setujui, harap lakukan pembayaran segera!"),
+          title:
+              "Peminjaman kamu untuk Gedung Damar\nsudah di setujui, harap lakukan pembayaran segera!"),
       const NotificationItem(
           icon: Icons.calendar_today_outlined,
           title: "Peminjaman kamu untuk Gedung Damar\nmenunggu persetujuan."),
@@ -20,16 +21,19 @@ class NotificationPage extends StatelessWidget {
           title: "Pembayaran kamu untuk Gedung Serba\nGuna sudah kami terima."),
       const NotificationItem(
           icon: Icons.check_circle,
-          title: "Peminjaman kamu untuk Gedung Serba\nGuna sudah di setujui, harap lakukan pembayaran segera!"),
+          title:
+              "Peminjaman kamu untuk Gedung Serba\nGuna sudah di setujui, harap lakukan pembayaran segera!"),
       const NotificationItem(
           icon: Icons.calendar_today_outlined,
-          title: "Peminjaman kamu untuk Gedung Serba\nGuna menunggu persetujuan."),
+          title:
+              "Peminjaman kamu untuk Gedung Serba\nGuna menunggu persetujuan."),
       const NotificationItem(
           icon: Icons.warning,
           title: "Laporan kamu untuk Gedung Damar\nsudah kami proses."),
     ];
 
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: const Text(
           'Notification Page',
@@ -53,7 +57,7 @@ class NotificationPage extends StatelessWidget {
           return notifications[index];
         },
       ),
-    );
+    ));
   }
 }
 

@@ -21,7 +21,8 @@ class RentPage extends StatefulWidget {
 /// Kelas state ini berisi logika untuk membangun UI dan mengelola state pada halaman peminjaman.
 class _RentPageState extends State<RentPage> {
   String _selectedValue = 'Gedung Serbaguna'; // Nilai default untuk dropdown
-  final String _description = 'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem Lorem ipsumLorem ipsum Lorem ipsumLorem ipsum  ipsumLorem ipsumLorem ipsumLorem ipsum'; // Deskripsi default
+  final String _description =
+      'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem Lorem ipsumLorem ipsum Lorem ipsumLorem ipsum  ipsumLorem ipsumLorem ipsumLorem ipsum'; // Deskripsi default
 
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _nimController = TextEditingController();
@@ -33,7 +34,8 @@ class _RentPageState extends State<RentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: Colors.grey[400],
       body: SingleChildScrollView(
         child: Column(
@@ -63,7 +65,7 @@ class _RentPageState extends State<RentPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   /// _buildUploadDocumentWidget Function
@@ -117,7 +119,6 @@ class _RentPageState extends State<RentPage> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: _isProcessing ? null : _handleSubmitRequest,
@@ -236,7 +237,8 @@ class _RentPageState extends State<RentPage> {
     }
 
     // Validasi email menggunakan RegExp
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(_emailController.text)) {
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+        .hasMatch(_emailController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Format email tidak valid.'),

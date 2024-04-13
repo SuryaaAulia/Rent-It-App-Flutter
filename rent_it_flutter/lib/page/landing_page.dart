@@ -7,7 +7,8 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: const Color.fromRGBO(236, 232, 232, 1),
       body: Stack(
         children: [
@@ -29,7 +30,7 @@ class LandingPage extends StatelessWidget {
                   padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 20.0),
                   child: Image(
-                    image: AssetImage('assets/Logo_Rentit.png'),
+                    image: AssetImage('assets/images/Logo_Rentit.png'),
                     width: 50,
                     height: 50,
                   ),
@@ -63,6 +64,6 @@ class LandingPage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

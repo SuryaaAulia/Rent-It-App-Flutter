@@ -5,11 +5,13 @@ class DetailFacilityPage extends StatelessWidget {
   final FacilityItems item;
   final String title;
 
-  const DetailFacilityPage({super.key, required this.title, required this.item});
+  const DetailFacilityPage(
+      {super.key, required this.title, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: Text(title,
             style: const TextStyle(color: Color.fromRGBO(217, 217, 217, 1))),
@@ -49,11 +51,13 @@ class DetailFacilityPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       const Text('Deskripsi :', style: TextStyle(fontSize: 15)),
-                      Text(item.description, style: const TextStyle(fontSize: 15)),
+                      Text(item.description,
+                          style: const TextStyle(fontSize: 15)),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Text('Price : ', style: TextStyle(fontSize: 15)),
+                          const Text('Price : ',
+                              style: TextStyle(fontSize: 15)),
                           Text(
                             item.price,
                             style: const TextStyle(
@@ -95,6 +99,6 @@ class DetailFacilityPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> {
     screenHeight = MediaQuery.of(context).size.height;
     const rGray = Color.fromRGBO(236, 232, 232, 1);
 
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: rGray,
       body: SingleChildScrollView(
         child: Column(
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: const RBottomNavbar(),
-    );
+    ));
   }
 
   Widget buildIndicator() => AnimatedSmoothIndicator(

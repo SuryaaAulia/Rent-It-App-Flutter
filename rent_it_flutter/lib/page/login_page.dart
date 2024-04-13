@@ -3,16 +3,20 @@ import 'package:rent_it_flutter/page/home_page.dart';
 import 'package:rent_it_flutter/widgets/custom_shapes_login.dart'; // Import custom clipper
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: const Color.fromRGBO(236, 232, 232, 1),
       body: Stack(
         children: [
           ClipPath(
             clipper: RClipPath2(),
             child: Container(
-              color: const Color.fromARGB(255, 226, 42, 50), // Warna dari RClipPath2
+              color: const Color.fromARGB(
+                  255, 226, 42, 50), // Warna dari RClipPath2
               height: MediaQuery.of(context).size.height * 0.5,
             ),
           ),
@@ -26,7 +30,7 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
                   child: Image(
-                    image: AssetImage('assets/Logo_Rentit.png'),
+                    image: AssetImage('assets/images/Logo_Rentit.png'),
                     width: 50,
                     height: 50,
                   ),
@@ -77,6 +81,6 @@ class LoginPage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

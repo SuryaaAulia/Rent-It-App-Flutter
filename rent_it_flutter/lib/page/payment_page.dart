@@ -6,7 +6,8 @@ class PaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         title: const Text(
           'Payment',
@@ -131,7 +132,8 @@ class PaymentPage extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            backgroundColor: Color.fromRGBO(236, 232, 232, 1),
+                            backgroundColor:
+                                const Color.fromRGBO(236, 232, 232, 1),
                             title: const Text('Konfirmasi Pembayaran'),
                             content: const Text(
                                 'Apakah Anda yakin ingin melakukan pembayaran?'),
@@ -144,8 +146,8 @@ class PaymentPage extends StatelessWidget {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        backgroundColor:
-                                            Color.fromRGBO(236, 232, 232, 1),
+                                        backgroundColor: const Color.fromRGBO(
+                                            236, 232, 232, 1),
                                         title: const Text(
                                             'Konfirmasi Pembayaran Berhasil'),
                                         content:
@@ -217,6 +219,6 @@ class PaymentPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
