@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(TopupPage());
-}
 
-class TopupPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PaymentPage(),
-    );
-  }
-}
 
 class PaymentPage extends StatefulWidget {
+  const PaymentPage({super.key});
+
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
@@ -25,7 +16,7 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'TopUp',
           style: TextStyle(
               color: Color.fromRGBO(217, 217, 217, 1),
@@ -33,34 +24,34 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
         centerTitle: true,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: <Color>[
-                const Color.fromRGBO(159, 21, 33, 1),
-                const Color.fromRGBO(226, 42, 50, 1)
+                Color.fromRGBO(159, 21, 33, 1),
+                Color.fromRGBO(226, 42, 50, 1)
               ],
             ),
           ),
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Saldo Anda',
                   style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(84, 78, 78, 1)),
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 Container(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
@@ -69,7 +60,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -80,14 +71,14 @@ class _PaymentPageState extends State<PaymentPage> {
                           color: Colors.grey[300],
                           shape: BoxShape.circle,
                         ),
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Icon(
                           Icons.account_balance_wallet_outlined,
                           color: Color.fromRGBO(159, 21, 33, 1),
                         ),
                       ),
-                      SizedBox(width: 10.0),
-                      Text(
+                      const SizedBox(width: 10.0),
+                      const Text(
                         'Rp50.000',
                         style: TextStyle(
                             fontSize: 20.0,
@@ -99,8 +90,8 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),
               ],
             ),
-            SizedBox(height: 70.0),
-            Text(
+            const SizedBox(height: 70.0),
+            const Text(
               'Pilihan Saldo TopUp',
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -111,7 +102,7 @@ class _PaymentPageState extends State<PaymentPage> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -120,7 +111,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -145,7 +136,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 10.0),
+                    const SizedBox(width: 10.0),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
@@ -172,33 +163,33 @@ class _PaymentPageState extends State<PaymentPage> {
               padding: const EdgeInsets.only(top: 80.0),
               child: OutlinedButton(
                 onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all<Size>(
+                      const Size(100.0, 0.0)), // Atur lebar minimum tombol
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(255, 255, 255, 1),
+                  ),
+                  overlayColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(226, 42, 50, 1),
+                  ),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromRGBO(226, 42, 50, 1),
+                  ),
+                  side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(
+                      color: Color.fromRGBO(226, 42, 50, 1),
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
                       vertical: 12.0), // Atur padding tombol secara vertikal
                   child: Text(
                     'TopUp',
                     style: TextStyle(
                       fontSize: 16.0, // Atur ukuran teks
                       fontWeight: FontWeight.w600, // Atur tebal teks
-                    ),
-                  ),
-                ),
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(100.0, 0.0)), // Atur lebar minimum tombol
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(255, 255, 255, 1),
-                  ),
-                  overlayColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(226, 42, 50, 1),
-                  ),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(226, 42, 50, 1),
-                  ),
-                  side: MaterialStateProperty.all<BorderSide>(
-                    BorderSide(
-                      color: Color.fromRGBO(226, 42, 50, 1),
-                      width: 2,
                     ),
                   ),
                 ),
@@ -217,25 +208,25 @@ class _PaymentPageState extends State<PaymentPage> {
           selectedIndex = index;
         });
       },
-      child: Text(
-        text,
-        style: TextStyle(
-          color: selectedIndex == index ? Colors.white : Colors.red,
-        ),
-      ),
       style: ButtonStyle(
         side: MaterialStateProperty.all<BorderSide>(
           BorderSide(
             color: selectedIndex == index
-                ? Color.fromRGBO(226, 42, 50, 1)
+                ? const Color.fromRGBO(226, 42, 50, 1)
                 : Colors.red,
             width: 3.0,
           ),
         ),
         backgroundColor: MaterialStateProperty.all<Color>(
           selectedIndex == index
-              ? Color.fromRGBO(226, 42, 50, 1)
+              ? const Color.fromRGBO(226, 42, 50, 1)
               : Colors.transparent,
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: selectedIndex == index ? Colors.white : Colors.red,
         ),
       ),
     );

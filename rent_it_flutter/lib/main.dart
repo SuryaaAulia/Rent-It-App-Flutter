@@ -11,7 +11,7 @@ void main() {
             color: Color.fromRGBO(217, 217, 217, 1)), // Set icon color to white
       ),
     ),
-    home: Scaffold(
+    home: const Scaffold(
       body: SafeArea(child: LandingPage()),
     ),
   ));

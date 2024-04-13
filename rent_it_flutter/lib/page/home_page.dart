@@ -7,10 +7,9 @@ import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();

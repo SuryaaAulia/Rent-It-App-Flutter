@@ -12,18 +12,18 @@ class LoginPage extends StatelessWidget {
           ClipPath(
             clipper: RClipPath2(),
             child: Container(
-              color: Color.fromARGB(255, 226, 42, 50), // Warna dari RClipPath2
+              color: const Color.fromARGB(255, 226, 42, 50), // Warna dari RClipPath2
               height: MediaQuery.of(context).size.height * 0.5,
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
                   child: Image(
                     image: AssetImage('assets/Logo_Rentit.png'),
@@ -31,8 +31,8 @@ class LoginPage extends StatelessWidget {
                     height: 50,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
                   child: TextField(
                     decoration: InputDecoration(
@@ -40,8 +40,8 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
                   child: TextField(
                     obscureText: true,
@@ -61,14 +61,14 @@ class LoginPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

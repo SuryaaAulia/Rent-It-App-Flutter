@@ -3,6 +3,8 @@ import 'package:rent_it_flutter/page/login_page.dart';
 import 'package:rent_it_flutter/widgets/custom_shapes_login.dart';
 
 class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,19 +14,19 @@ class LandingPage extends StatelessWidget {
           ClipPath(
             clipper: RClipPath2(),
             child: Container(
-              color: Color.fromARGB(
+              color: const Color.fromARGB(
                   255, 226, 42, 50), // Gunakan warna dari RClipPath2
               height: MediaQuery.of(context).size.height * 0.5,
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
+                const Padding(
+                  padding: EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 8.0, bottom: 20.0),
                   child: Image(
                     image: AssetImage('assets/Logo_Rentit.png'),
@@ -43,16 +45,16 @@ class LandingPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
-                    child: Text(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.red),
                     ),
                   ),
                 ),

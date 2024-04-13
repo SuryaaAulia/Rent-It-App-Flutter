@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/data_diri_widget.dart';
@@ -12,7 +11,7 @@ import 'package:rent_it_flutter/widgets/top_widget.dart';
 /// RentPage Class
 /// Kelas ini membangun halaman untuk melakukan proses peminjaman.
 class RentPage extends StatefulWidget {
-  const RentPage({Key? key}) : super(key: key);
+  const RentPage({super.key});
 
   @override
   _RentPageState createState() => _RentPageState();
@@ -132,7 +131,7 @@ class _RentPageState extends State<RentPage> {
                   ),
                   child: Text(
                     _isProcessing ? 'Sedang Memproses...' : 'Ajukan Permintaan',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ],

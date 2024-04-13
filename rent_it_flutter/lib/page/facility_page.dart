@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/page/detail_facility_page.dart'; // Import halaman detail
 
 class FacilityPage extends StatelessWidget {
-  const FacilityPage({Key? key}) : super(key: key);
+  const FacilityPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Facility Page',
           style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: <Color>[
-                const Color.fromRGBO(159, 21, 33, 1),
-                const Color.fromRGBO(226, 42, 50, 1)
+                Color.fromRGBO(159, 21, 33, 1),
+                Color.fromRGBO(226, 42, 50, 1)
               ],
             ),
           ),
         ),
       ),
       backgroundColor: const Color.fromRGBO(236, 232, 232, 1),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
@@ -36,7 +36,8 @@ class FacilityPage extends StatelessWidget {
                   image: AssetImage('assets/gedung_damar.png'),
                   title: 'Gedung Damar',
                   price: 'Rp. 100.000',
-                  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+                  description:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
                 ),
                 FacilityItems(
                   image: AssetImage('assets/gedung_damar.png'),
@@ -64,20 +65,25 @@ class FacilityItems extends StatelessWidget {
     required this.title,
     required this.price,
     required this.description,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector( // Menggunakan GestureDetector untuk menangani gesture onTap
+    return GestureDetector(
+      // Menggunakan GestureDetector untuk menangani gesture onTap
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => DetailFacilityPage(title: title, item: this,)), // Mengirim judul item yang dipilih ke halaman detail
+          MaterialPageRoute(
+              builder: (context) => DetailFacilityPage(
+                    title: title,
+                    item: this,
+                  )), // Mengirim judul item yang dipilih ke halaman detail
         );
       },
       child: Card(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,12 +99,12 @@ class FacilityItems extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     price,
                     style: TextStyle(

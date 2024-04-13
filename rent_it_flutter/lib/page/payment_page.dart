@@ -1,24 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key}) : super(key: key);
+  const PaymentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Payment',
           style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: <Color>[
-                const Color.fromRGBO(159, 21, 33, 1),
-                const Color.fromRGBO(226, 42, 50, 1)
+                Color.fromRGBO(159, 21, 33, 1),
+                Color.fromRGBO(226, 42, 50, 1)
               ],
             ),
           ),
@@ -31,12 +30,12 @@ class PaymentPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              const Text(
                 'Saldo Anda',
                 style: TextStyle(
                     fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
               ),
-              RWallet(),
+              const RWallet(),
               Padding(
                 padding: const EdgeInsets.only(top: 35),
                 child: Padding(
@@ -44,7 +43,7 @@ class PaymentPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Fasilitas Yang Di Pinjam',
                         style: TextStyle(
                             fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
@@ -54,7 +53,7 @@ class PaymentPage extends StatelessWidget {
                         child: Stack(
                           children: [
                             Image.asset('assets/gedung_damar.png'),
-                            Positioned(
+                            const Positioned(
                               top: 10,
                               right: 10,
                               child: Text('20/6/24',
@@ -72,7 +71,7 @@ class PaymentPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Gedung Damar',
                                         style: TextStyle(
                                             color: Color.fromRGBO(
@@ -80,7 +79,7 @@ class PaymentPage extends StatelessWidget {
                                             fontSize: 20),
                                       ),
                                       Container(
-                                        child: Text(
+                                        child: const Text(
                                           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
                                           style: TextStyle(
                                               color: Color.fromRGBO(
@@ -101,27 +100,27 @@ class PaymentPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
+              const Padding(
+                padding: EdgeInsets.only(top: 40),
                 child: Text(
                   'Harga : ',
                   style: TextStyle(
                       fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
                 ),
               ),
-              Text(
+              const Text(
                 'Rp50.000',
                 style: TextStyle(
                     fontSize: 38,
                     color: Color.fromRGBO(159, 21, 32, 1),
                     fontWeight: FontWeight.w600),
               ),
-              Divider(
+              const Divider(
                 color: Color.fromRGBO(84, 78, 78, 1),
                 endIndent: 45,
                 thickness: 1.2,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
@@ -133,8 +132,8 @@ class PaymentPage extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             backgroundColor: Color.fromRGBO(236, 232, 232, 1),
-                            title: Text('Konfirmasi Pembayaran'),
-                            content: Text(
+                            title: const Text('Konfirmasi Pembayaran'),
+                            content: const Text(
                                 'Apakah Anda yakin ingin melakukan pembayaran?'),
                             actions: <Widget>[
                               TextButton(
@@ -147,16 +146,17 @@ class PaymentPage extends StatelessWidget {
                                       return AlertDialog(
                                         backgroundColor:
                                             Color.fromRGBO(236, 232, 232, 1),
-                                        title: Text(
+                                        title: const Text(
                                             'Konfirmasi Pembayaran Berhasil'),
-                                        content: Text('Pembayaran berhasil!'),
+                                        content:
+                                            const Text('Pembayaran berhasil!'),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
                                               Navigator.of(context)
                                                   .pop(); // Tutup dialog konfirmasi berhasil
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'OK',
                                               style: TextStyle(
                                                 color: Color.fromRGBO(
@@ -169,7 +169,7 @@ class PaymentPage extends StatelessWidget {
                                     },
                                   );
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Ya',
                                   style: TextStyle(
                                       color: Color.fromRGBO(226, 42, 50, 1)),
@@ -180,7 +180,7 @@ class PaymentPage extends StatelessWidget {
                                   // Tambahkan logika jika pembayaran dibatalkan
                                   Navigator.of(context).pop(); // Tutup dialog
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Tidak',
                                   style: TextStyle(
                                       color: Color.fromRGBO(84, 78, 78, 1)),
@@ -191,25 +191,25 @@ class PaymentPage extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text('Bayar'),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(236, 232, 232, 1),
+                        const Color.fromRGBO(236, 232, 232, 1),
                       ), // Bancground tombol
                       overlayColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(226, 42, 50, 1),
+                        const Color.fromRGBO(226, 42, 50, 1),
                       ), // Warna saat ditekan
                       foregroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(226, 42, 50, 1),
+                        const Color.fromRGBO(226, 42, 50, 1),
                       ), // Warna merah teks
                       side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(
+                        const BorderSide(
                           color: Color.fromRGBO(
                               226, 42, 50, 1), // Warna pada pinggir button
                           width: 2,
                         ),
                       ),
                     ),
+                    child: const Text('Bayar'),
                   ),
                 ),
               ),
