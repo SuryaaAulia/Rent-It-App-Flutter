@@ -16,9 +16,9 @@ class RWallet extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Container(
-          margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+          margin: const EdgeInsets.fromLTRB(10, 20, 8, 10),
           width: screenWidth * 0.9,
-          padding: const EdgeInsets.fromLTRB(20, 5, 10, 5),
+          padding: const EdgeInsets.fromLTRB(20, 5, 8, 5),
           decoration: BoxDecoration(
               color: rWhite,
               borderRadius: BorderRadius.circular(15),

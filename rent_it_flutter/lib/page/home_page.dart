@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(25, 15, 10, 15),
+              padding: const EdgeInsets.fromLTRB(25, 15, 20, 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
