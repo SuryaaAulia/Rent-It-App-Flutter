@@ -8,14 +8,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _isPasswordVisible = false;
-  String _password = 'password123';
+  final String _password = 'password123';
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Profile Page',
             style: TextStyle(
                 color: Color.fromRGBO(217, 217, 217, 1),
@@ -38,27 +38,27 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/images/avatar.jpg'),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Nama Pengguna',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'email@example.com',
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     _isPasswordVisible ? _password : '********',
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   IconButton(
                     icon: Icon(
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               OutlinedButton(
                 onPressed: () {
                   Navigator.push(
@@ -82,13 +82,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     MaterialPageRoute(builder: (context) => EditProfilePage()),
                   );
                 },
-                child: Text('Edit'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.grey[700],
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  minimumSize: Size(double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  minimumSize: const Size(double.infinity,
                       50), // Set the button width to full width and height to 50
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -100,30 +99,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 2.0,
                   ),
                 ),
+                child: const Text('Edit'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               OutlinedButton(
                 onPressed: () {
                   // Logika untuk tombol logout
                 },
-                child: Text('Logout'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.red,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  minimumSize: Size(double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  minimumSize: const Size(double.infinity,
                       50), // Set the button width to full width and height to 50
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.red,
                     width: 2.0,
                   ),
                 ),
+                child: const Text('Logout'),
               ),
             ],
           ),
