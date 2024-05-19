@@ -56,12 +56,12 @@ class RClipPath2 extends CustomClipper<Path> {
   void paint(Canvas canvas, Size size) {
     // Warna untuk path pertama
     Paint paint_0 = Paint()
-      ..color = Color.fromARGB(255, 226, 42, 50)
+      ..color = const Color.fromARGB(255, 226, 42, 50)
       ..style = PaintingStyle.fill;
 
     // Warna untuk path kedua
     Paint paint_1 = Paint()
-      ..color = Color.fromARGB(255, 159, 21, 33)
+      ..color = const Color.fromARGB(255, 159, 21, 33)
       ..style = PaintingStyle.fill;
 
     Path combinedPath = getClip(size);
