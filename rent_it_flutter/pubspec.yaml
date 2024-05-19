@@ -42,6 +42,7 @@ dependencies:
   sqflite: ^2.0.0+3
   permission_handler: ^11.3.1
   image_picker: ^1.0.7
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,8 @@ flutter:
     - assets/images/
     - assets/images/Logo_Rentit.png
     - assets/images/avatar.jpg
+    - assets/images/lapangan-tenis-1.jpg
+    - assets/images/GKU-1.jpg
 
   # To add assets to your application, add an assets section, like this:
   #   - images/a_dot_ham.jpeg
