@@ -36,119 +36,122 @@ class _HomePageState extends State<HomePage> {
     screenHeight = MediaQuery.of(context).size.height;
     const rGray = Color.fromRGBO(236, 232, 232, 1);
 
-    return Scaffold(
-      backgroundColor: rGray,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const RShapeTopWidget(
-              child: Column(
-                children: <Widget>[RAppBar(), RWallet()],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: rGray,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const RShapeTopWidget(
+                child: Column(
+                  children: <Widget>[RAppBar(), RWallet()],
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    'Fasilitas Yang Kamu Pinjam',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    ROverlayImage(
-                      screenWidth: screenWidth * 0.9,
-                      screenHeight: screenHeight * 0.25,
-                      image: const AssetImage('assets/images/ged_damar.jpg'),
-                    ),
-                    RTopTextOverlay(
-                      borderStyle: BoxShape.circle,
-                      icon: Icons.more_horiz_rounded,
-                      border: Border.all(
-                          style: BorderStyle.solid, color: rGray, width: 2),
-                      screenWidth: screenWidth,
-                      color: rGray,
-                      tanggal: 'Hari Ini',
-                      waktu: '13.00 - 14.00',
-                    ),
-                    const RBottomTextOverlay(
-                      sizeNamaGedung: 20,
-                      color: rGray,
-                      namaGedung: 'Gedung Damar',
-                      descGedung:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Fasilitas Yang Kamu Pinjam',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 15, 20, 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text(
-                    'Fasilitas Yang Kami Sediakan',
-                    style: TextStyle(fontSize: 20),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      ROverlayImage(
+                        screenWidth: screenWidth * 0.9,
+                        screenHeight: screenHeight * 0.25,
+                        image: const AssetImage('assets/images/ged_damar.jpg'),
+                      ),
+                      RTopTextOverlay(
+                        borderStyle: BoxShape.circle,
+                        icon: Icons.more_horiz_rounded,
+                        border: Border.all(
+                            style: BorderStyle.solid, color: rGray, width: 2),
+                        screenWidth: screenWidth,
+                        color: rGray,
+                        tanggal: 'Hari Ini',
+                        waktu: '13.00 - 14.00',
+                      ),
+                      const RBottomTextOverlay(
+                        sizeNamaGedung: 20,
+                        color: rGray,
+                        namaGedung: 'Gedung Damar',
+                        descGedung:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+                      ),
+                    ],
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FacilityPage()),
-                        );
-                      },
-                      child: const Text('More',
-                          style: TextStyle(
-                              color: Color.fromRGBO(159, 21, 33, 1)))),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: SizedBox(
-                height: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CarouselSlider.builder(
-                        carouselController: controller,
-                        itemCount: urlImages.length,
-                        itemBuilder: (context, index, realIndex) {
-                          final urlImage = urlImages[index];
-                          return buildImage(urlImage, index, screenWidth * 0.9,
-                              screenHeight * 0.4);
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 15, 20, 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      'Fasilitas Yang Kami Sediakan',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FacilityPage()),
+                          );
                         },
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          height: 200,
-                          enableInfiniteScroll: false,
-                          autoPlayAnimationDuration: const Duration(seconds: 2),
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) =>
-                              setState(() => activeIndex = index),
+                        child: const Text('More',
+                            style: TextStyle(
+                                color: Color.fromRGBO(159, 21, 33, 1)))),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: SizedBox(
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CarouselSlider.builder(
+                          carouselController: controller,
+                          itemCount: urlImages.length,
+                          itemBuilder: (context, index, realIndex) {
+                            final urlImage = urlImages[index];
+                            return buildImage(urlImage, index,
+                                screenWidth * 0.9, screenHeight * 0.4);
+                          },
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            height: 200,
+                            enableInfiniteScroll: false,
+                            autoPlayAnimationDuration:
+                                const Duration(seconds: 2),
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) =>
+                                setState(() => activeIndex = index),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    buildIndicator(),
-                  ],
+                      SizedBox(height: screenHeight * 0.02),
+                      buildIndicator(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        bottomNavigationBar: const RBottomNavbar(),
       ),
-      bottomNavigationBar: const RBottomNavbar(),
     );
   }
 
