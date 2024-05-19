@@ -36,6 +36,8 @@ class DetailFacilityPage extends StatelessWidget {
               Flexible(
                 child: Image(
                   image: item.image,
+                  height: 300,
+                  width: 300,
                 ),
               ),
               const SizedBox(height: 20),
