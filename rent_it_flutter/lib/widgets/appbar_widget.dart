@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/page/profile_page.dart';
 
 class RAppBar extends StatelessWidget {
   const RAppBar({super.key});
@@ -24,12 +25,20 @@ class RAppBar extends StatelessWidget {
                     fontWeight: FontWeight.bold))
           ],
         ),
-        actions: const [
-          CircleAvatar(
-            radius: 45,
-            backgroundImage: AssetImage('assets/images/avatar.jpg'),
-            backgroundColor: Colors.black,
-          )
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
+            },
+            child: const CircleAvatar(
+              radius: 45,
+              backgroundImage: AssetImage('assets/images/avatar.jpg'),
+              backgroundColor: Colors.black,
+            ),
+          ),
         ],
       ),
     );
