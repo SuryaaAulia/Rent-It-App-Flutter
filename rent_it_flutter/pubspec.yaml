@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/Logo_Rentit.png
+    - assets/images/avatar.jpg
 
   # To add assets to your application, add an assets section, like this:
   #   - images/a_dot_ham.jpeg
