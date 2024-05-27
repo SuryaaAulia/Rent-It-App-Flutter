@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/profile_page.dart';
+import 'package:rent_it_flutter/pages/profile_page.dart';
 
 class RAppBar extends StatelessWidget {
   const RAppBar({super.key});

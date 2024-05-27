@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/history_page.dart';
-import 'package:rent_it_flutter/page/notification_page.dart';
-import 'package:rent_it_flutter/page/rent_page.dart'; // Import your HistoryPage
+import 'package:rent_it_flutter/pages/history_page.dart';
+import 'package:rent_it_flutter/pages/notification_page.dart';
+import 'package:rent_it_flutter/pages/rent_page.dart'; // Import your HistoryPage
 
 class RBottomNavbar extends StatelessWidget {
   const RBottomNavbar({super.key, Key});

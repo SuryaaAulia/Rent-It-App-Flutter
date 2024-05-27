@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/payment_page.dart';
-import 'package:rent_it_flutter/page/topup_page.dart';
+import 'package:rent_it_flutter/pages/payment_page.dart';
+import 'package:rent_it_flutter/pages/topup_page.dart';
 import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
 
 class RWallet extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/home_page.dart';
-import 'package:rent_it_flutter/page/landing_page.dart';
-import 'package:rent_it_flutter/page/payment_page.dart';
-import 'package:rent_it_flutter/page/profile_page.dart';
+import 'package:rent_it_flutter/pages/home_page.dart';
+import 'package:rent_it_flutter/pages/landing_page.dart';
+import 'package:rent_it_flutter/pages/payment_page.dart';
+import 'package:rent_it_flutter/pages/profile_page.dart';
 
 void main() {
   runApp(MaterialApp(
