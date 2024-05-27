@@ -13,12 +13,18 @@ class HistoryPage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'History',
-            style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,
+              color: Color.fromRGBO(217, 217, 217, 1)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        title: const Text(
+          'History',
+          style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
+        ),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
