@@ -108,47 +108,49 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromRGBO(217, 217, 217, 1)),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: const Text(
-          'Notification',
-          style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[
-                Color.fromRGBO(159, 21, 33, 1),
-                Color.fromRGBO(226, 42, 50, 1),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back,
+                color: Color.fromRGBO(217, 217, 217, 1)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: const Text(
+            'Notification',
+            style: TextStyle(color: Color.fromRGBO(217, 217, 217, 1)),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color.fromRGBO(159, 21, 33, 1),
+                  Color.fromRGBO(226, 42, 50, 1),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      body: PagedListView<int, NotificationItem>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<NotificationItem>(
-          itemBuilder: (context, item, index) => item,
-          noMoreItemsIndicatorBuilder: (context) => const Column(
-            children: [
-              Divider(), // Custom red divider
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  "Kamu sudah membaca semua notifikasi",
-                  style: TextStyle(fontSize: 16.0, color: Colors.grey),
+        body: PagedListView<int, NotificationItem>(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<NotificationItem>(
+            itemBuilder: (context, item, index) => item,
+            noMoreItemsIndicatorBuilder: (context) => const Column(
+              children: [
+                Divider(), // Custom red divider
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "Kamu sudah membaca semua notifikasi",
+                    style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
