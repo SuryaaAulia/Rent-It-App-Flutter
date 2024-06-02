@@ -53,7 +53,7 @@ class LandingPage extends StatelessWidget {
                     child: const Text(
                       'Login',
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 255, 255, 255),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),

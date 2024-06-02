@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Profile Page',
+            'Profile',
             style: TextStyle(
               color: Color.fromRGBO(217, 217, 217, 1),
               fontWeight: FontWeight.w600,
