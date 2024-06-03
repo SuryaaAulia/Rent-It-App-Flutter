@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/models/history.dart';
 import 'package:rent_it_flutter/pages/facility_page.dart';
+import 'package:rent_it_flutter/services/facility_service.dart';
+import 'package:rent_it_flutter/services/history_service.dart';
 import 'package:rent_it_flutter/widgets/bottom_navbar_widget.dart';
 import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
 import 'package:rent_it_flutter/widgets/text_overlay.dart';
@@ -8,7 +11,6 @@ import 'package:rent_it_flutter/widgets/appbar_widget.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '/services/facility_service.dart';
 import '/models/facility.dart';
 import '/utils/path_parse.dart';
 
@@ -27,11 +29,13 @@ class _HomePageState extends State<HomePage> {
   int activeIndex = 0;
   final controller = CarouselController();
   late Future<List<Facility>> futureFacilities;
+  late Future<List<History>> futureHistory;
 
   @override
   void initState() {
     super.initState();
     futureFacilities = FacilityService().fetchFacilities();
+    futureHistory = HistoryService().fetchHistory();
   }
 
   @override
@@ -100,7 +104,6 @@ class _HomePageState extends State<HomePage> {
                                 screenWidth: screenWidth,
                                 color: rGray,
                                 tanggal: 'Hari Ini',
-                                waktu: '13.00 - 14.00',
                               ),
                               const RBottomTextOverlay(
                                 sizeNamaGedung: 20,
