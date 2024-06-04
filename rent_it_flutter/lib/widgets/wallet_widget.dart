@@ -2,12 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/page/payment_page.dart';
 import 'package:rent_it_flutter/page/topup_page.dart';
 import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:money_formatter/money_formatter.dart';
 
-class RWallet extends StatelessWidget {
+class RWallet extends StatefulWidget {
   const RWallet({super.key});
 
+  @override
+  State<RWallet> createState() => _RWalletState();
+}
+
+class _RWalletState extends State<RWallet> {
   final rWhite = const Color.fromRGBO(236, 232, 232, 1);
   final rRed = const Color.fromRGBO(159, 21, 33, 1);
+  String balanceFormatted = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getWalletInfo();
+  }
+
+  Future<void> _getWalletInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      final response = await http.get(
+        Uri.parse('https://rent-it.site/api/auth/getWallet'),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final userData = jsonDecode(response.body);
+        if (mounted) {
+          setState(() {
+            double balance =
+                double.parse(userData['data']['balance'].toString());
+            MoneyFormatterOutput formatter = MoneyFormatter(
+              amount: balance,
+            ).output;
+            balanceFormatted = formatter.withoutFractionDigits;
+          });
+        }
+      } else {
+        print('Failed to fetch wallet info: ${response.statusCode}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +95,8 @@ class RWallet extends StatelessWidget {
                         iconColor: rRed,
                         iconType: Icons.account_balance_wallet_outlined,
                         borderStyle: BoxShape.circle),
-                    const Text(
-                      'Rp50.000',
+                    Text(
+                      'Rp$balanceFormatted',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
