@@ -2,16 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/pages/payment_page.dart';
 import 'package:rent_it_flutter/pages/topup_page.dart';
 import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
+import 'package:rent_it_flutter/widgets/shimmer_widget.dart';
 
-class RWallet extends StatelessWidget {
+class RWallet extends StatefulWidget {
   const RWallet({super.key});
 
-  final rWhite = const Color.fromRGBO(236, 232, 232, 1);
-  final rRed = const Color.fromRGBO(159, 21, 33, 1);
+  @override
+  _RWalletState createState() => _RWalletState();
+}
+
+class _RWalletState extends State<RWallet> {
+  bool isLoading = true;
+  String balance = 'Rp50.000';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalance();
+  }
+
+  Future<void> _loadBalance() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      balance = 'Rp50.000';
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    const rWhite = Color.fromRGBO(236, 232, 232, 1);
+    const rRed = Color.fromRGBO(159, 21, 33, 1);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -44,18 +67,20 @@ class RWallet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    RIconBorder(
-                        borderColor: const Color.fromRGBO(207, 207, 207, 1),
+                    const RIconBorder(
+                        borderColor: Color.fromRGBO(207, 207, 207, 1),
                         iconColor: rRed,
                         iconType: Icons.account_balance_wallet_outlined,
                         borderStyle: BoxShape.circle),
-                    const Text(
-                      'Rp50.000',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color.fromRGBO(84, 78, 78, 1)),
-                    ),
+                    isLoading
+                        ? const RShimmerWidget.rectangle(width: 80, height: 16)
+                        : Text(
+                            balance,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Color.fromRGBO(84, 78, 78, 1)),
+                          ),
                   ],
                 ),
               ),
@@ -72,14 +97,14 @@ class RWallet extends StatelessWidget {
                               builder: (context) => const PaymentPage()),
                         );
                       },
-                      child: Column(
+                      child: const Column(
                         children: <Widget>[
                           RIconBorder(
                             borderColor: rRed,
                             iconColor: rWhite,
                             iconType: Icons.upgrade,
                             borderStyle: BoxShape.rectangle,
-                            radius: const BorderRadius.all(Radius.circular(4)),
+                            radius: BorderRadius.all(Radius.circular(4)),
                           ),
                           Text(
                             'Bayar',
@@ -96,14 +121,14 @@ class RWallet extends StatelessWidget {
                               builder: (context) => const TopUpPage()),
                         );
                       },
-                      child: Column(
+                      child: const Column(
                         children: <Widget>[
                           RIconBorder(
                             borderColor: rRed,
                             iconColor: rWhite,
                             iconType: Icons.add,
                             borderStyle: BoxShape.rectangle,
-                            radius: const BorderRadius.all(Radius.circular(4)),
+                            radius: BorderRadius.all(Radius.circular(4)),
                           ),
                           Text(
                             'Top-Up',
