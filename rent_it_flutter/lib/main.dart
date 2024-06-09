@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/pages/landing_page.dart';
+import 'package:rent_it_flutter/pages/home_page.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -9,7 +9,7 @@ void main() {
       ),
     ),
     home: const Scaffold(
-      body: SafeArea(child: LandingPage()),
+      body: SafeArea(child: HomePage()),
     ),
   ));
 }
