@@ -9,7 +9,7 @@ void main() {
       ),
     ),
     home: const Scaffold(
-      body: SafeArea(child: LandingPage()), // Hapus const dari sini
+      body: SafeArea(child: LandingPage()),
     ),
   ));
 }
