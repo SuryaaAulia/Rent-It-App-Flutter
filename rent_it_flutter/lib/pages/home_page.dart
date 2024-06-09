@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<History>> _loadHistoryWithDelay() async {
     await Future.delayed(const Duration(seconds: 2));
-    return HistoryService().fetchHistory();
+    return HistoryService().fetchHistories();
   }
 
   @override
