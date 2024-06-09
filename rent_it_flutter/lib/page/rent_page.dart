@@ -1,269 +1,244 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
-import 'package:rent_it_flutter/widgets/data_diri_widget.dart';
 import 'package:rent_it_flutter/widgets/dropdown_rent_widget.dart';
-import 'package:rent_it_flutter/widgets/loading_screen.dart';
 import 'package:rent_it_flutter/widgets/top_widget.dart';
+import 'package:rent_it_flutter/widgets/data_diri_widget.dart';
+import 'package:rent_it_flutter/widgets/upload_document_widget.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+import 'package:rent_it_flutter/models/facility.dart';
+import 'package:rent_it_flutter/services/facility_service.dart';
 
-/// RentPage Class
-/// Kelas ini membangun halaman untuk melakukan proses peminjaman.
-class RentPage extends StatefulWidget {
-  const RentPage({super.key});
+class RentFacilityScreen extends StatefulWidget {
+  const RentFacilityScreen({super.key});
 
   @override
-  _RentPageState createState() => _RentPageState();
+  _RentFacilityScreenState createState() => _RentFacilityScreenState();
 }
 
-/// _RentPageState Class
-/// Kelas state ini berisi logika untuk membangun UI dan mengelola state pada halaman peminjaman.
-class _RentPageState extends State<RentPage> {
-  String _selectedValue = 'Gedung Serbaguna'; // Nilai default untuk dropdown
-  final String _description =
-      'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem Lorem ipsumLorem ipsum Lorem ipsumLorem ipsum  ipsumLorem ipsumLorem ipsumLorem ipsum'; // Deskripsi default
-
-  final TextEditingController _namaController = TextEditingController();
+class _RentFacilityScreenState extends State<RentFacilityScreen> {
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic>? _userData;
+  Facility? _selectedFacility;
+  DateTime? _selectedDate;
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _nimController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _noTelController = TextEditingController();
+  List<DateTime> _unavailableDates = [];
+  List<Facility> _facilities = [];
 
-  File? _selectedFile; // File yang dipilih
-  bool _isProcessing = false; // Status proses
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+    _fetchFacilities();
+  }
+
+  Future<void> _fetchUserData() async {
+    String? token = await _getToken();
+    print("Token: $token"); // Debugging: Print token
+    if (token != null) {
+      final response = await http.get(
+        Uri.parse('https://rent-it.site/api/auth/getData'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _userData = json.decode(response.body)['data']['user'];
+        });
+      } else {
+        print('Failed to load user data');
+      }
+    }
+  }
+
+  Future<String?> _getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  Future<void> _fetchFacilities() async {
+    FacilityService facilityService = FacilityService();
+    try {
+      List<Facility> facilities = await facilityService.fetchFacilities();
+      setState(() {
+        _facilities = facilities;
+        _selectedFacility = facilities.isNotEmpty ? facilities[0] : null;
+        if (_selectedFacility != null) {
+          _fetchUnavailableDates(_selectedFacility!.id.toString());
+        }
+      });
+    } catch (e) {
+      print('Failed to load facilities: $e');
+    }
+  }
+
+  Future<void> _fetchUnavailableDates(String facilityId) async {
+    String? token = await _getToken();
+    if (token != null) {
+      try {
+        final response = await http.get(
+          Uri.parse(
+              'http://10.0.2.2:8000/api/rent/unavailableDates?facility_id=$facilityId'),
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          List<dynamic> dates = json.decode(response.body)['data'];
+          setState(() {
+            _unavailableDates =
+                dates.map((date) => DateTime.parse(date)).toList();
+            print(
+                "Unavailable dates: $_unavailableDates"); // Debugging: Print unavailable dates
+          });
+        } else {
+          print(
+              'Failed to load unavailable dates: ${response.statusCode} - ${response.reasonPhrase}');
+        }
+      } catch (e) {
+        print('Error occurred while fetching unavailable dates: $e');
+      }
+    } else {
+      print('No token available');
+    }
+  }
+
+  Future<void> _pickDate() async {
+    if (_selectedFacility == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a facility first')),
+      );
+      return;
+    }
+
+    await _fetchUnavailableDates(_selectedFacility!.id.toString());
+
+    DateTime initialDate = DateTime.now();
+
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      if (_unavailableDates.contains(pickedDate)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Fasilitas tidak tersedia pada tanggal tersebut')),
+        );
+      } else {
+        setState(() {
+          _selectedDate = pickedDate;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.grey[400],
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+    var screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
             const RShapeTopWidget(
               child: Column(
                 children: <Widget>[RAppBar()],
               ),
             ),
-            DropdownRentWidget(
-              selectedValue: _selectedValue,
-              description: _description,
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedValue = newValue!;
-                });
-              },
-            ),
-            DataDiriWidget(
-              namaController: _namaController,
-              nimController: _nimController,
-              emailController: _emailController,
-              phoneNumberController: _phoneNumberController,
-            ),
-            _buildUploadDocumentWidget(),
-          ],
-        ),
-      ),
-    ));
-  }
-
-  /// _buildUploadDocumentWidget Function
-  /// Fungsi ini membangun bagian UI yang berhubungan dengan upload dokumen pendukung.
-  Widget _buildUploadDocumentWidget() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      child: Container(
-        padding: const EdgeInsets.all(20.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Text(
-              "Upload Dokumen Pendukung",
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 5.0),
-            _buildFileUploadArea(),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: _pickFile,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 120.0), // Adjust the top padding as needed
+              child: _userData == null || _facilities.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              DropdownRentWidget(
+                                facilities: _facilities,
+                                selectedFacility: _selectedFacility!,
+                                onChanged: (newFacility) async {
+                                  setState(() {
+                                    _selectedFacility = newFacility!;
+                                    _selectedDate = null;
+                                  });
+                                  await _fetchUnavailableDates(
+                                      newFacility!.id.toString());
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              GestureDetector(
+                                onTap: _pickDate,
+                                child: Container(
+                                  width: screenWidth * 0.9,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _selectedDate == null
+                                            ? 'Select Date'
+                                            : DateFormat('dd/MM/yyyy')
+                                                .format(_selectedDate!),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.calendar_today,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              DataDiriWidget(
+                                nameController: _nameController,
+                                nimController: _nimController,
+                                emailController: _emailController,
+                                noTelController: _noTelController,
+                              ),
+                              const SizedBox(height: 20),
+                              UploadDocumentWidget(
+                                formKey: _formKey,
+                                selectedFacility: _selectedFacility,
+                                selectedDate: _selectedDate,
+                                nameController: _nameController,
+                                nimController: _nimController,
+                                emailController: _emailController,
+                                noTelController: _noTelController,
+                                userData: _userData,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    elevation: 4.0,
-                    shadowColor: Colors.black.withOpacity(0.4),
-                  ),
-                  child: const Text(
-                    'Pilih File',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: _isProcessing ? null : _handleSubmitRequest,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 4.0,
-                    shadowColor: Colors.black.withOpacity(0.4),
-                  ),
-                  child: Text(
-                    _isProcessing ? 'Sedang Memproses...' : 'Ajukan Permintaan',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
       ),
     );
-  }
-
-  /// _buildFileUploadArea Function
-  /// Fungsi ini membangun area UI yang menampilkan informasi tentang file yang telah diupload.
-  Widget _buildFileUploadArea() {
-    return Container(
-      width: double.infinity,
-      height: 200.0,
-      margin: const EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(color: Colors.grey),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'File yang telah diupload:',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            const SizedBox(height: 10.0),
-            _selectedFile != null
-                ? Text(_selectedFile!.path.split('/').last)
-                : const Text('Tidak ada file yang dipilih'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// _pickFile Function
-  /// Fungsi ini dipanggil ketika tombol "Pilih File" ditekan, digunakan untuk memilih file dari galeri.
-  void _pickFile() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
-    setState(() {
-      if (pickedFile != null) {
-        _selectedFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  /// _handleSubmitRequest Function
-  /// Fungsi ini dipanggil ketika tombol "Ajukan Permintaan" ditekan, digunakan untuk memvalidasi input dan memulai proses permintaan.
-  void _handleSubmitRequest() {
-    if (_validateInputs()) {
-      setState(() {
-        _isProcessing = true;
-      });
-
-      // Simulasi proses pemrosesan selama 5 detik
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => LoadingScreen(
-              nama: _namaController.text,
-              nim: _nimController.text,
-              email: _emailController.text,
-              phoneNumber: _phoneNumberController.text,
-              tempatDipilih: _selectedValue,
-              hargaTempat: _getNominal(_selectedValue),
-            ),
-          ),
-        );
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Permintaan sedang diproses.'),
-        ),
-      );
-    }
-  }
-
-  /// _validateInputs Function
-  /// Fungsi ini digunakan untuk memvalidasi input yang dimasukkan oleh pengguna sebelum proses permintaan dimulai.
-  bool _validateInputs() {
-    if (_namaController.text.isEmpty ||
-        _nimController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _phoneNumberController.text.isEmpty ||
-        _selectedFile == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Mohon lengkapi semua input dan pilih file.'),
-        ),
-      );
-      return false;
-    }
-
-    // Validasi email menggunakan RegExp
-    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-        .hasMatch(_emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Format email tidak valid.'),
-        ),
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  /// _getNominal Function
-  /// Fungsi ini digunakan untuk mendapatkan nominal harga berdasarkan tempat yang dipilih.
-  String _getNominal(String selectedValue) {
-    switch (selectedValue) {
-      case 'GSG':
-        return '50.000';
-      case 'Lapangan Tennis':
-        return '100.000';
-      case 'Lapangan Bulutangkis':
-        return '70.000';
-      case 'TULT':
-        return '350.000';
-      default:
-        return '0';
-    }
   }
 }
