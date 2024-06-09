@@ -184,7 +184,7 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
       if (token != null) {
         final request = http.MultipartRequest(
           'POST',
-          Uri.parse('http://10.0.2.2:8000/api/rent/store'),
+          Uri.parse('https://rent-it.site/api/rent/store'),
         );
 
         request.headers['Authorization'] = 'Bearer $token';
