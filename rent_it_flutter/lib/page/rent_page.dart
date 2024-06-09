@@ -85,7 +85,7 @@ class _RentFacilityScreenState extends State<RentFacilityScreen> {
       try {
         final response = await http.get(
           Uri.parse(
-              'http://10.0.2.2:8000/api/rent/unavailableDates?facility_id=$facilityId'),
+              'https://rent-it.site/api/rent/unavailableDates?facility_id=$facilityId'),
           headers: {
             'Authorization': 'Bearer $token',
           },
