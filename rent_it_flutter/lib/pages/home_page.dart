@@ -5,6 +5,7 @@ import 'package:rent_it_flutter/services/facility_service.dart';
 import 'package:rent_it_flutter/services/history_service.dart';
 import 'package:rent_it_flutter/widgets/bottom_navbar_widget.dart';
 import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
+import 'package:rent_it_flutter/widgets/shimmer_widget.dart';
 import 'package:rent_it_flutter/widgets/text_overlay.dart';
 import 'package:rent_it_flutter/widgets/top_widget.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
@@ -34,8 +35,18 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    futureFacilities = FacilityService().fetchFacilities();
-    futureHistory = HistoryService().fetchHistory();
+    futureFacilities = _loadFacilitiesWithDelay();
+    futureHistory = _loadHistoryWithDelay();
+  }
+
+  Future<List<Facility>> _loadFacilitiesWithDelay() async {
+    await Future.delayed(const Duration(seconds: 2));
+    return FacilityService().fetchFacilities();
+  }
+
+  Future<List<History>> _loadHistoryWithDelay() async {
+    await Future.delayed(const Duration(seconds: 2));
+    return HistoryService().fetchHistory();
   }
 
   @override
@@ -71,7 +82,106 @@ class _HomePageState extends State<HomePage> {
                 future: futureFacilities,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RShimmerWidget.rectangle(
+                              width: screenWidth * 0.9,
+                              height: screenHeight * 0.25,
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                        child: Text(
+                            'Failed to load facilities: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No facilities available'));
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          ROverlayImage(
+                            screenWidth: screenWidth * 0.9,
+                            screenHeight: screenHeight * 0.25,
+                            image:
+                                const AssetImage('assets/images/ged_damar.jpg'),
+                          ),
+                          RTopTextOverlay(
+                            borderStyle: BoxShape.circle,
+                            icon: Icons.more_horiz_rounded,
+                            border: Border.all(
+                                style: BorderStyle.solid,
+                                color: rGray,
+                                width: 2),
+                            screenWidth: screenWidth,
+                            color: rGray,
+                            tanggal: 'Hari Ini',
+                          ),
+                          const RBottomTextOverlay(
+                            sizeNamaGedung: 20,
+                            color: rGray,
+                            namaGedung: 'Gedung Damar',
+                            descGedung:
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25, 15, 20, 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      'Fasilitas Yang Kami Sediakan',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FacilityPage()),
+                          );
+                        },
+                        child: const Text('More',
+                            style: TextStyle(
+                                color: Color.fromRGBO(159, 21, 33, 1)))),
+                  ],
+                ),
+              ),
+              FutureBuilder<List<Facility>>(
+                future: futureFacilities,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: SizedBox(
+                        height: 200,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: RShimmerWidget.rectangle(
+                                width: screenWidth * 0.9,
+                                height: 200,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   } else if (snapshot.hasError) {
                     return Center(
                         child: Text(
@@ -81,104 +191,39 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   final facilities = snapshot.data!;
-                  return Column(
-                    children: [
-                      Row(
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: SizedBox(
+                      height: 200,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Stack(
-                            children: [
-                              ROverlayImage(
-                                screenWidth: screenWidth * 0.9,
-                                screenHeight: screenHeight * 0.25,
-                                image: const AssetImage(
-                                    'assets/images/ged_damar.jpg'),
+                          Expanded(
+                            child: CarouselSlider.builder(
+                              carouselController: controller,
+                              itemCount: facilities.length,
+                              itemBuilder: (context, index, realIndex) {
+                                final facility = facilities[index];
+                                return buildImage(facility.image, facility.name,
+                                    screenWidth * 0.9, screenHeight * 0.4);
+                              },
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                height: 200,
+                                enableInfiniteScroll: false,
+                                autoPlayAnimationDuration:
+                                    const Duration(seconds: 2),
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) =>
+                                    setState(() => activeIndex = index),
                               ),
-                              RTopTextOverlay(
-                                borderStyle: BoxShape.circle,
-                                icon: Icons.more_horiz_rounded,
-                                border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color: rGray,
-                                    width: 2),
-                                screenWidth: screenWidth,
-                                color: rGray,
-                                tanggal: 'Hari Ini',
-                              ),
-                              const RBottomTextOverlay(
-                                sizeNamaGedung: 20,
-                                color: rGray,
-                                namaGedung: 'Gedung Damar',
-                                descGedung:
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
-                              ),
-                            ],
+                            ),
                           ),
+                          SizedBox(height: screenHeight * 0.02),
+                          buildIndicator(facilities.length),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 15, 20, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            const Text(
-                              'Fasilitas Yang Kami Sediakan',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const FacilityPage()),
-                                  );
-                                },
-                                child: const Text('More',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromRGBO(159, 21, 33, 1)))),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: SizedBox(
-                          height: 200,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: CarouselSlider.builder(
-                                  carouselController: controller,
-                                  itemCount: facilities.length,
-                                  itemBuilder: (context, index, realIndex) {
-                                    final facility = facilities[index];
-                                    return buildImage(
-                                        facility.image,
-                                        facility.name,
-                                        screenWidth * 0.9,
-                                        screenHeight * 0.4);
-                                  },
-                                  options: CarouselOptions(
-                                    autoPlay: true,
-                                    height: 200,
-                                    enableInfiniteScroll: false,
-                                    autoPlayAnimationDuration:
-                                        const Duration(seconds: 2),
-                                    enlargeCenterPage: true,
-                                    onPageChanged: (index, reason) =>
-                                        setState(() => activeIndex = index),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              buildIndicator(facilities.length),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   );
                 },
               ),
