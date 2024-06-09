@@ -70,6 +70,8 @@ class History {
         return Colors.orange.withOpacity(0.5);
       case 'Completed':
         return Colors.green.withOpacity(0.5);
+      case 'Active':
+        return Colors.blue.withOpacity(0.5);
       default:
         return Colors.grey.withOpacity(0.5);
     }
@@ -84,6 +86,8 @@ class History {
         return Colors.orange;
       case 'Completed':
         return Colors.green;
+      case 'Active':
+        return Colors.blue;
       default:
         return Colors.grey;
     }
