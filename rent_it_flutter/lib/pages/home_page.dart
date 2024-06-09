@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/models/history.dart';
 import 'package:rent_it_flutter/pages/facility_page.dart';
@@ -201,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             child: CarouselSlider.builder(
                               carouselController: controller,
-                              itemCount: facilities.length,
+                              itemCount: 4,
                               itemBuilder: (context, index, realIndex) {
                                 final facility = facilities[index];
                                 return buildImage(facility.image, facility.name,
@@ -220,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.02),
-                          buildIndicator(facilities.length),
+                          buildIndicator(4),
                         ],
                       ),
                     ),
