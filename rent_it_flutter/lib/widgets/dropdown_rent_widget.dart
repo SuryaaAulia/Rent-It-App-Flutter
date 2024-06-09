@@ -1,67 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/models/facility.dart';
+import 'package:rent_it_flutter/utils/path_parse.dart';
 import 'package:rent_it_flutter/widgets/box_decorations.dart';
+import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
+import 'package:rent_it_flutter/widgets/text_overlay.dart';
 
 class DropdownRentWidget extends StatelessWidget {
-  final String selectedValue;
-  final String description;
-  final ValueChanged<String?> onChanged;
+  final List<Facility> facilities;
+  final Facility selectedFacility;
+  final ValueChanged<Facility?> onChanged;
 
   const DropdownRentWidget({
     super.key,
-    required this.selectedValue,
-    required this.description,
+    required this.facilities,
+    required this.selectedFacility,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Subjudul sesuai dengan nilai dropdown yang dipilih
-    String subTitle = _getSubTitle(selectedValue);
-    // Nominal sesuai dengan nilai dropdown yang dipilih
-    String nominal = _getNominal(selectedValue);
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    const rGray = Color.fromRGBO(236, 232, 232, 1);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
           child: Container(
-            width: double.infinity,
-            height: 50, // Sesuaikan tinggi dengan kebutuhan
-            decoration:
-                redRoundedDropdownDecoration, // Menggunakan dekorasi yang telah dideklarasikan
+            width: screenWidth * 0.9,
+            height: 50,
+            decoration: redRoundedDropdownDecoration,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: selectedValue,
+                child: DropdownButton<Facility>(
+                  value: selectedFacility,
                   isExpanded: true,
-                  icon: const Icon(Icons.arrow_drop_down,
-                      color: Colors.white), // Teks putih
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
                   iconSize: 24,
                   elevation: 16,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0), // Teks putih dengan fontsize 16
-                  dropdownColor: Colors
-                      .red, // Warna merah untuk latar belakang item dropdown list
+                  style: const TextStyle(color: Colors.white, fontSize: 16.0),
+                  dropdownColor: Colors.red,
                   onChanged: onChanged,
-                  items: <String>[
-                    'Gedung Serbaguna',
-                    'Lapangan Tennis',
-                    'Lapangan Bulutangkis',
-                    'TULT'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
+                  items: facilities
+                      .map<DropdownMenuItem<Facility>>((Facility facility) {
+                    return DropdownMenuItem<Facility>(
+                      value: facility,
                       child: Text(
-                        value,
+                        facility.name,
                         style: TextStyle(
-                          fontSize: 16.0, // Samakan fontsize dengan deskripsi
-                          fontWeight: selectedValue == value
+                          fontSize: 16.0,
+                          fontWeight: selectedFacility.name == facility.name
                               ? FontWeight.bold
-                              : FontWeight
-                                  .normal, // Teks yang dipilih menjadi tebal
+                              : FontWeight.normal,
                         ),
                       ),
                     );
@@ -71,105 +64,36 @@ class DropdownRentWidget extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: getImageRoundedWithShadowDecoration(
-                selectedValue), // Menggunakan dekorasi gambar yang sesuai dengan nilai dropdown
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets
-                              .only(), // Padding di dalam kontainer
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Rp$nominal', // Menampilkan nominal
-                            textAlign:
-                                TextAlign.right, // Menempatkan teks ke kanan
-                            style: const TextStyle(
-                                fontSize: 23.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight
-                                    .bold), // Warna putih, tebal, dan fontsize 16
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                ROverlayImage(
+                  screenWidth: screenWidth * 0.9,
+                  screenHeight: screenHeight * 0.25,
+                  image: AssetImage(getLocalImagePath(selectedFacility.image
+                      .split(', ')[0])), // Updated to use NetworkImage
                 ),
-                const SizedBox(
-                  height: 120.0,
+                RTopTextOverlay(
+                  borderStyle: BoxShape.circle,
+                  border: Border.all(
+                      style: BorderStyle.solid, color: rGray, width: 2),
+                  screenWidth: screenWidth,
+                  color: rGray,
+                  tanggal: 'Rp ${selectedFacility.price}',
                 ),
-                Text(
-                  subTitle, // Menampilkan subjudul
-                  style: const TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight
-                          .bold), // Warna putih, tebal, dan fontsize 20
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: 70.0), // Padding hanya sebelah kanan
-                  child: Text(
-                    description,
-                    textAlign:
-                        TextAlign.justify, // Teks diratakan kiri dan kanan
-                    style: const TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight
-                            .normal), // Warna putih, fontsize lebih kecil, dan tidak tebal
-                  ),
+                RBottomTextOverlay(
+                  sizeNamaGedung: 20,
+                  color: rGray,
+                  namaGedung: selectedFacility.name,
+                  descGedung: selectedFacility.description,
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ],
     );
-  }
-
-  // Fungsi untuk mendapatkan subjudul sesuai dengan nilai dropdown yang dipilih
-  String _getSubTitle(String selectedValue) {
-    switch (selectedValue) {
-      case 'Gedung Serbaguna':
-        return 'Gedung Serbaguna';
-      case 'Lapangan Tennis':
-        return 'Lapangan Tennis';
-      case 'Lapangan Bulutangkis':
-        return 'Lapangan Bulutangkis';
-      case 'TULT':
-        return 'TULT';
-      default:
-        return 'Default';
-    }
-  }
-
-  // Fungsi untuk mendapatkan nominal sesuai dengan nilai dropdown yang dipilih
-  String _getNominal(String selectedValue) {
-    switch (selectedValue) {
-      case 'Gedung Serbaguna':
-        return '50.000';
-      case 'Lapangan Tennis':
-        return '100.000';
-      case 'Lapangan Bulutangkis':
-        return '70.000';
-      case 'TULT':
-        return '350.000';
-      default:
-        return '0';
-    }
   }
 }
