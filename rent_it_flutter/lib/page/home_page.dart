@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     'assets/images/ged_sc.jpg',
     'assets/images/ged_damar.jpg',
     'assets/images/GSG.jpg',
-    'assets/images/avatar.jpg',
+    'assets/images/RedAvatar.jpeg',
     'assets/images/lap_tennis.jpg',
   ];
   @override

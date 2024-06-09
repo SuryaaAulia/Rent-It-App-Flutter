@@ -49,6 +49,7 @@ dependencies:
   device_info: ^2.0.3
   loading_animation_widget: ^1.2.1
   money_formatter: ^0.0.6
+  local_auth: ^2.2.0
 
 dev_dependencies:
   flutter_test:
