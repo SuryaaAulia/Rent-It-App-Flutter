@@ -28,7 +28,7 @@ class _RAppBarState extends State<RAppBar> {
       final response = await http.get(
         Uri.parse('https://rent-it.site/api/auth/getData'),
         headers: <String, String>{
-          'Autrization': 'Bearer $token',
+          'Authorization': 'Bearer $token',
         },
       );
 

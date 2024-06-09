@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent_it_flutter/page/home_page.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import custom clipper
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -103,21 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  // Padding(
-                  //   padding: EdgeInsets.only(
-                  //       left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       border: Border.all(color: Colors.black, width: 5.0),
-                  //       borderRadius: BorderRadius.circular(10.0),
-                  //     ),
-                  //     child: Image(
-                  //       image: AssetImage('assets/images/Logo_Rentit.png'),
-                  //       width: 50,
-                  //       height: 50,
-                  //     ),
-                  //   ),
-                  // ),
                   const Padding(
                     padding: EdgeInsets.only(
                         left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),

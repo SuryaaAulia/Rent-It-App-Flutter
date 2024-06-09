@@ -97,6 +97,7 @@ class _RWalletState extends State<RWallet> {
                         borderStyle: BoxShape.circle),
                     Text(
                       'Rp$balanceFormatted',
+                      // 'Test',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
