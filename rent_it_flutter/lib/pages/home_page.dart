@@ -1,8 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/models/history.dart';
+import 'package:rent_it_flutter/pages/detail_facility_page.dart';
 import 'package:rent_it_flutter/pages/facility_page.dart';
+import 'package:rent_it_flutter/pages/rent_page.dart';
 import 'package:rent_it_flutter/services/facility_service.dart';
 import 'package:rent_it_flutter/services/history_service.dart';
 import 'package:rent_it_flutter/widgets/bottom_navbar_widget.dart';
@@ -48,7 +48,15 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<History>> _loadHistoryWithDelay() async {
     await Future.delayed(const Duration(seconds: 2));
-    return HistoryService().fetchHistories();
+    List<History> allHistories = await HistoryService().fetchHistories();
+    DateTime now = DateTime.now();
+    String currentDate =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    return allHistories
+        .where((history) =>
+            history.status == 'Active' &&
+            history.tanggalPemesanan == currentDate)
+        .toList();
   }
 
   @override
@@ -80,8 +88,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              FutureBuilder<List<Facility>>(
-                future: futureFacilities,
+              FutureBuilder<List<History>>(
+                future: futureHistory,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Column(
@@ -99,11 +107,41 @@ class _HomePageState extends State<HomePage> {
                     );
                   } else if (snapshot.hasError) {
                     return Center(
-                        child: Text(
-                            'Failed to load facilities: ${snapshot.error}'));
+                        child:
+                            Text('Failed to load history: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No facilities available'));
+                    return Center(
+                        child: Container(
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              gradient: LinearGradient(
+                                colors: <Color>[
+                                  Color.fromRGBO(159, 21, 33, 1),
+                                  Color.fromRGBO(226, 42, 50, 1),
+                                ],
+                              ),
+                            ),
+                            width: screenWidth * 0.9,
+                            height: screenHeight * 0.25,
+                            child: Center(
+                                child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const RentPage()),
+                                );
+                              },
+                              child: const Text('Sewa Fasilitas Sekarang!',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                            ))));
                   }
+
+                  final history = snapshot.data![0];
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -113,8 +151,7 @@ class _HomePageState extends State<HomePage> {
                           ROverlayImage(
                             screenWidth: screenWidth * 0.9,
                             screenHeight: screenHeight * 0.25,
-                            image:
-                                const AssetImage('assets/images/ged_damar.jpg'),
+                            image: AssetImage(getLocalImagePath(history.image)),
                           ),
                           RTopTextOverlay(
                             borderStyle: BoxShape.circle,
@@ -127,12 +164,11 @@ class _HomePageState extends State<HomePage> {
                             color: rGray,
                             tanggal: 'Hari Ini',
                           ),
-                          const RBottomTextOverlay(
+                          RBottomTextOverlay(
                             sizeNamaGedung: 20,
                             color: rGray,
-                            namaGedung: 'Gedung Damar',
-                            descGedung:
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+                            namaGedung: history.namaGedung,
+                            descGedung: history.desc,
                           ),
                         ],
                       ),
@@ -203,11 +239,16 @@ class _HomePageState extends State<HomePage> {
                           Expanded(
                             child: CarouselSlider.builder(
                               carouselController: controller,
-                              itemCount: 4,
+                              itemCount: facilities.length,
                               itemBuilder: (context, index, realIndex) {
                                 final facility = facilities[index];
-                                return buildImage(facility.image, facility.name,
-                                    screenWidth * 0.9, screenHeight * 0.4);
+                                return buildImage(
+                                    facility.image,
+                                    facility.name,
+                                    facility,
+                                    screenWidth * 0.9,
+                                    screenHeight * 0.4,
+                                    context);
                               },
                               options: CarouselOptions(
                                 autoPlay: true,
@@ -250,8 +291,21 @@ class _HomePageState extends State<HomePage> {
   void animateToSlide(int index) => controller.animateToPage(index);
 }
 
-Widget buildImage(String imageUrl, String name, double width, double height) =>
-    SizedBox(
+Widget buildImage(String imageUrl, String name, Facility facility, double width,
+        double height, BuildContext context) =>
+    GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailFacilityPage(
+              title: facility.name,
+              facility: facility,
+            ),
+          ),
+        );
+      },
+      child: SizedBox(
         width: width,
         child: Stack(
           children: [
@@ -272,4 +326,6 @@ Widget buildImage(String imageUrl, String name, double width, double height) =>
               sizeNamaGedung: 14,
             )
           ],
-        ));
+        ),
+      ),
+    );
