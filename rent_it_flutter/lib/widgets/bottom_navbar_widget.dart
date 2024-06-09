@@ -35,7 +35,7 @@ class RBottomNavbar extends StatelessWidget {
           case 1:
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const RentPage()),
+              MaterialPageRoute(builder: (context) => RentFacilityScreen()),
             );
           case 2:
             Navigator.push(
