@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent_it_flutter/page/home_page.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -67,21 +67,21 @@ class _LoginPageState extends State<LoginPage> {
       // Jika login berhasil, navigasi ke halaman beranda
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } else {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Login Error"),
-            content: Text("Invalid email or password"),
+            title: const Text("Login Error"),
+            content: const Text("Invalid email or password"),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           );
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                         left: 20.0, right: 20.0, top: 8.0, bottom: 8.0),
                     child: TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email',
                       ),
                     ),
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Password',
                       ),
                     ),
