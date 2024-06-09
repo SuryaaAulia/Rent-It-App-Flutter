@@ -8,7 +8,7 @@ class HistoryService {
     fromJson: (json) => History.fromJson(json),
   );
 
-  Future<List<History>> fetchHistory() async {
+  Future<List<History>> fetchHistories() async {
     return await _service.fetchItems();
   }
 }
