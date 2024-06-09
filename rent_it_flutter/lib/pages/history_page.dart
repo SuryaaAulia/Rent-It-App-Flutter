@@ -60,7 +60,7 @@ class HistoryPage extends StatelessWidget {
                   final history = histories[index];
                   return Column(
                     children: [
-                      SizedBox(height: screenHeight * 0.05),
+                      SizedBox(height: screenHeight * 0.02),
                       Stack(
                         children: [
                           ROverlayImage(
@@ -83,7 +83,7 @@ class HistoryPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: screenHeight * 0.03),
+                      SizedBox(height: screenHeight * 0.02),
                     ],
                   );
                 },
