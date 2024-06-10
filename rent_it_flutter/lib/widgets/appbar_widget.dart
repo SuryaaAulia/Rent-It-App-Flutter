@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:rent_it_flutter/page/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,38 +83,18 @@ class _RAppBarState extends State<RAppBar> {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Logout Confirmation"),
-                    content: Text("Are you sure want to logout ?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Tutup dialog
-                        },
-                        child: Text("Cancel"),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          // Logout jika pengguna memilih "Ya"
-                          Navigator.of(context).pop(); // Tutup dialog
-                          await _logout();
-                        },
-                        child: Text(
-                          "Yes",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
-            icon: Icon(Icons.logout),
+            child: const CircleAvatar(
+              radius: 45,
+              backgroundImage: AssetImage('assets/images/RedAvatar.jpeg'),
+              backgroundColor: Colors.black,
+            ),
           ),
         ],
       ),

@@ -50,6 +50,7 @@ dependencies:
   device_info_plus: ^9.1.2
   http: ^1.2.0
   shimmer: ^3.0.0
+  local_auth: ^2.2.0
 
 dev_dependencies:
   flutter_test:
