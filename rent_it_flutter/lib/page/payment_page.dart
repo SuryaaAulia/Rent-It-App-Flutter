@@ -1,10 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:rent_it_flutter/models/pemesanan.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
 import 'package:rent_it_flutter/widgets/image_overlay_widget.dart';
 import 'package:rent_it_flutter/widgets/text_overlay.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 
-class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key});
+class PaymentPage extends StatefulWidget {
+  const PaymentPage({Key? key}) : super(key: key);
+
+  @override
+  State<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  List<Pemesanan> pemesanans = [];
+  int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _getPemesanans();
+  }
+
+  Future<void> _getPemesanans() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      final response = await http.get(
+        Uri.parse('https://rent-it.site/api/auth/pemesanans'),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> body = jsonDecode(response.body);
+        List<dynamic> data = body['data'];
+        List<Pemesanan> fetchedPemesanans =
+            data.map((dynamic item) => Pemesanan.fromJson(item)).toList();
+
+        setState(() {
+          pemesanans = fetchedPemesanans;
+        });
+      } else {
+        print('Failed to fetch pemesanans: ${response.statusCode}');
+      }
+    }
+  }
+
+  Future<void> _confirmPayment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      final response = await http.put(
+        Uri.parse(
+            'https://rent-it.site/api/auth/pemesanans/${pemesanans[currentIndex].id}'),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'status': 'active', // Mengubah status pemesanan menjadi active
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Status pemesanan berhasil diubah, tampilkan dialog sukses
+        Navigator.of(context).pop(); // Tutup dialog konfirmasi pembayaran
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: const Color.fromRGBO(236, 232, 232, 1),
+              title: const Text('Konfirmasi Pembayaran Berhasil'),
+              content: const Text('Pembayaran berhasil!'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                      color: Color.fromRGBO(226, 42, 50, 1),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        print('Failed to confirm payment: ${response.statusCode}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,35 +147,57 @@ class PaymentPage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
                     ),
-                    Stack(
-                      children: [
-                        ROverlayImage(
-                          screenWidth: screenWidth * 0.9,
-                          screenHeight: screenHeight * 0.25,
-                          image:
-                              const AssetImage('assets/images/ged_damar.jpg'),
-                        ),
-                        RTopTextOverlay(
-                          borderStyle: BoxShape.circle,
-                          border: Border.all(
-                              style: BorderStyle.solid, color: rGray, width: 2),
-                          screenWidth: screenWidth,
-                          color: rGray,
-                          tanggal: '20/6/24',
-                          waktu: '13.00 - 14.00',
-                        ),
-                        const RBottomTextOverlay(
-                          sizeNamaGedung: 20,
-                          color: rGray,
-                          namaGedung: 'Gedung Damar',
-                          descGedung:
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
-                        ),
-                      ],
-                    ),
+                    pemesanans.isEmpty
+                        ? const CircularProgressIndicator()
+                        : CarouselSlider.builder(
+                            itemCount: pemesanans.length,
+                            itemBuilder: (BuildContext context, int index,
+                                int realIndex) {
+                              return Stack(
+                                children: [
+                                  ROverlayImage(
+                                    screenWidth: screenWidth * 0.9,
+                                    screenHeight: screenHeight * 0.25,
+                                    image: NetworkImage(
+                                      'https://rent-it.site/storage/' +
+                                          pemesanans[index].images.first,
+                                    ),
+                                  ),
+                                  RTopTextOverlay(
+                                    borderStyle: BoxShape.circle,
+                                    border: Border.all(
+                                        style: BorderStyle.solid,
+                                        color: rGray,
+                                        width: 2),
+                                    screenWidth: screenWidth,
+                                    color: rGray,
+                                    tanggal: pemesanans[index].tanggalPemesanan,
+                                    // Jika waktu ada, tambahkan field di model
+                                  ),
+                                  RBottomTextOverlay(
+                                    sizeNamaGedung: 20,
+                                    color: rGray,
+                                    namaGedung: pemesanans[index].name,
+                                    descGedung: pemesanans[index].description,
+                                  ),
+                                ],
+                              );
+                            },
+                            options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              enableInfiniteScroll: false,
+                              initialPage: 0,
+                              viewportFraction: 0.9,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                            ),
+                          ),
                   ],
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -88,9 +206,11 @@ class PaymentPage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
                     ),
-                    const Text(
-                      'Rp50.000',
-                      style: TextStyle(
+                    Text(
+                      pemesanans.isNotEmpty
+                          ? 'Rp${pemesanans[currentIndex].price}'
+                          : 'Rp0',
+                      style: const TextStyle(
                           fontSize: 38,
                           color: Color.fromRGBO(159, 21, 32, 1),
                           fontWeight: FontWeight.w600),
@@ -116,36 +236,8 @@ class PaymentPage extends StatelessWidget {
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
-                                      // Tambahkan logika jika pembayaran berhasil
-                                      Navigator.of(context).pop();
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            backgroundColor:
-                                                const Color.fromRGBO(
-                                                    236, 232, 232, 1),
-                                            title: const Text(
-                                                'Konfirmasi Pembayaran Berhasil'),
-                                            content: const Text(
-                                                'Pembayaran berhasil!'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text(
-                                                  'OK',
-                                                  style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        226, 42, 50, 1),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      // Panggil fungsi untuk konfirmasi pembayaran
+                                      _confirmPayment();
                                     },
                                     child: const Text(
                                       'Ya',
@@ -182,11 +274,16 @@ class PaymentPage extends StatelessWidget {
                           side: MaterialStateProperty.all<BorderSide>(
                             const BorderSide(
                               color: Color.fromRGBO(226, 42, 50, 1),
-                              width: 2,
+                            ),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                         ),
-                        child: const Text('Bayar'),
+                        child: const Text('Bayar Sekarang'),
                       ),
                     ),
                   ],
