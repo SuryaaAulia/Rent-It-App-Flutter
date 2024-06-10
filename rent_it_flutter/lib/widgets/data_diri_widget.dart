@@ -2,24 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DataDiriWidget extends StatelessWidget {
-  final TextEditingController namaController;
+  final TextEditingController nameController;
   final TextEditingController nimController;
   final TextEditingController emailController;
-  final TextEditingController phoneNumberController;
+  final TextEditingController noTelController;
 
   const DataDiriWidget({
     Key? key,
-    required this.namaController,
+    required this.nameController,
     required this.nimController,
     required this.emailController,
-    required this.phoneNumberController,
+    required this.noTelController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Container(
+        width: screenWidth * 0.9,
         padding: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -44,103 +47,36 @@ class DataDiriWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20.0),
-            _buildTextInputField(
-              label: 'Nama',
-              controller: namaController,
+            TextFormField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+              validator: (value) =>
+                  value!.isEmpty ? 'Please enter your name' : null,
             ),
             const SizedBox(height: 20.0),
-            _buildTextInputField(
-              label: 'NIM',
+            TextFormField(
               controller: nimController,
-              isNumericOnly: true,
+              decoration: const InputDecoration(labelText: 'NIM'),
+              validator: (value) =>
+                  value!.isEmpty ? 'Please enter your NIM' : null,
             ),
             const SizedBox(height: 20.0),
-            _buildEmailInputField(
+            TextFormField(
               controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              validator: (value) =>
+                  value!.isEmpty ? 'Please enter your email' : null,
             ),
             const SizedBox(height: 20.0),
-            _buildTextInputField(
-              label: 'Nomor Telepon',
-              controller: phoneNumberController,
-              isNumericOnly: true,
+            TextFormField(
+              controller: noTelController,
+              decoration: const InputDecoration(labelText: 'Nomor Telepon'),
+              validator: (value) =>
+                  value!.isEmpty ? 'Please enter your phone number' : null,
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextInputField({
-    required String label,
-    required TextEditingController controller,
-    bool isNumericOnly = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.0,
-          ),
-        ),
-        const SizedBox(height: 5.0),
-        TextFormField(
-          controller: controller,
-          inputFormatters:
-              isNumericOnly ? [FilteringTextInputFormatter.digitsOnly] : [],
-          keyboardType:
-              isNumericOnly ? TextInputType.number : TextInputType.text,
-          decoration: InputDecoration(
-            hintText: 'Masukkan $label',
-            border: const UnderlineInputBorder(),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return '$label harus diisi';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildEmailInputField({
-    required TextEditingController controller,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Email',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18.0,
-          ),
-        ),
-        const SizedBox(height: 5.0),
-        TextFormField(
-          controller: controller,
-          keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            labelText: 'Masukkan Email',
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Email harus diisi';
-            }
-            bool isValidEmail =
-                RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value);
-            if (!isValidEmail) {
-              return 'Email tidak valid';
-            }
-            return null;
-          },
-        ),
-      ],
     );
   }
 }

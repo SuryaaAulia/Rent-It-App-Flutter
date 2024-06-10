@@ -1,31 +1,52 @@
-import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:rent_it_flutter/models/facility.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class UploadDocumentWidget extends StatefulWidget {
-  final File? selectedFile;
+  final GlobalKey<FormState> formKey;
+  final Facility? selectedFacility;
+  final DateTime? selectedDate;
+  final TextEditingController nameController;
+  final TextEditingController nimController;
+  final TextEditingController emailController;
+  final TextEditingController noTelController;
+  final Map<String, dynamic>? userData;
 
-  const UploadDocumentWidget({Key? key, this.selectedFile}) : super(key: key);
+  const UploadDocumentWidget({
+    Key? key,
+    required this.formKey,
+    this.selectedFacility,
+    this.selectedDate,
+    required this.nameController,
+    required this.nimController,
+    required this.emailController,
+    required this.noTelController,
+    this.userData,
+  }) : super(key: key);
 
   @override
   _UploadDocumentWidgetState createState() => _UploadDocumentWidgetState();
 }
 
 class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
-  File? _selectedFile;
+  PlatformFile? _pickedFile;
 
-  @override
-  void initState() {
-    super.initState();
-    _selectedFile = widget.selectedFile;
+  Future<String?> _getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
       child: Container(
         padding: const EdgeInsets.all(20.0),
+        width: screenWidth * 0.9,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.0),
@@ -72,8 +93,8 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (_selectedFile != null) {
-                      _handleSubmitRequest(context);
+                    if (_pickedFile != null) {
+                      _submitForm();
                     } else {
                       showDialog(
                         context: context,
@@ -133,8 +154,8 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
               style: TextStyle(fontSize: 18.0),
             ),
             const SizedBox(height: 10.0),
-            _selectedFile != null
-                ? Text(_selectedFile!.path.split('/').last)
+            _pickedFile != null
+                ? Text(_pickedFile!.path!.split('/').last)
                 : const Text('Tidak ada file yang dipilih'),
           ],
         ),
@@ -142,38 +163,55 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
     );
   }
 
-  void _pickFile() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
     );
-    setState(() {
-      if (pickedFile != null) {
-        _selectedFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+
+    if (result != null) {
+      setState(() {
+        _pickedFile = result.files.first;
+      });
+    }
   }
 
-  void _handleSubmitRequest(BuildContext context) {
-    // Handle submission logic here
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Permintaan sedang diproses'),
-          content: const Text('Permintaan Anda telah berhasil diajukan.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
+  Future<void> _submitForm() async {
+    if (widget.formKey.currentState!.validate() &&
+        widget.selectedDate != null &&
+        _pickedFile != null) {
+      String? token = await _getToken();
+      if (token != null) {
+        final request = http.MultipartRequest(
+          'POST',
+          Uri.parse('https://rent-it.site/api/rent/store'),
         );
-      },
-    );
+
+        request.headers['Authorization'] = 'Bearer $token';
+        request.fields['facility_id'] = widget.selectedFacility!.id.toString();
+        request.fields['user_id'] = widget.userData!['id'].toString();
+        request.fields['tanggalSewa'] =
+            DateFormat('yyyy-MM-dd').format(widget.selectedDate!);
+        request.fields['nama'] = widget.nameController.text;
+        request.fields['nim'] = widget.nimController.text;
+        request.fields['email'] = widget.emailController.text;
+        request.fields['noTel'] = widget.noTelController.text;
+
+        request.files.add(await http.MultipartFile.fromPath(
+          'inputFile',
+          _pickedFile!.path!,
+        ));
+
+        final response = await request.send();
+
+        if (response.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Berhasil mengajukan pesanan')));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Gagal mengajukan pesanan')));
+        }
+      }
+    }
   }
 }
