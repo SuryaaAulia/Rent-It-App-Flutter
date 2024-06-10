@@ -94,7 +94,15 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
                 ElevatedButton(
                   onPressed: () {
                     if (_pickedFile != null) {
-                      _submitForm();
+                      if (widget.selectedDate == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Silahkan pilih tanggal terlebih dahulu'),
+                          ),
+                        );
+                      } else {
+                        _submitForm();
+                      }
                     } else {
                       showDialog(
                         context: context,
@@ -207,6 +215,7 @@ class _UploadDocumentWidgetState extends State<UploadDocumentWidget> {
         if (response.statusCode == 201) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Berhasil mengajukan pesanan')));
+          Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Gagal mengajukan pesanan')));
