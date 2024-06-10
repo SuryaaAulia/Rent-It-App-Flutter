@@ -141,6 +141,10 @@ class _RentFacilityScreenState extends State<RentFacilityScreen> {
           _selectedDate = pickedDate;
         });
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Silahkan pilih tanggal terlebih dahulu')),
+      );
     }
   }
 
