@@ -50,7 +50,6 @@ dependencies:
   loading_animation_widget: ^1.2.1
   money_formatter: ^0.0.6
   http_parser: ^4.0.2
-  
 
 dev_dependencies:
   flutter_test:
