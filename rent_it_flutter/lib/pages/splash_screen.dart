@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:rent_it_flutter/page/home_page.dart';
-import 'package:rent_it_flutter/page/landing_page.dart';
+import 'package:rent_it_flutter/pages/home_page.dart';
+import 'package:rent_it_flutter/pages/landing_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class SplashScreen extends StatefulWidget {

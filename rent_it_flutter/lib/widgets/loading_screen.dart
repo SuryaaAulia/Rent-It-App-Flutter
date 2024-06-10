@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/widgets/appbar_widget.dart';
-import 'package:rent_it_flutter/page/home_page.dart';
+import 'package:rent_it_flutter/pages/home_page.dart';
 
 class LoadingScreen extends StatefulWidget {
   final String nama;

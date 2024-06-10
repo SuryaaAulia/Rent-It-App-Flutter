@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/login_page.dart';
+import 'package:rent_it_flutter/pages/login_page.dart';
 import 'package:rent_it_flutter/widgets/custom_shapes_login.dart';
 
 class LandingPage extends StatelessWidget {
@@ -43,7 +43,8 @@ class LandingPage extends StatelessWidget {
                       // Navigasi ke halaman beranda jika login berhasil
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                       );
                     },
                     style: ButtonStyle(

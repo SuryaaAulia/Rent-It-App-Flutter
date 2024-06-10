@@ -4,7 +4,7 @@ import 'package:rent_it_flutter/widgets/text_overlay.dart';
 import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key});
+  const PaymentPage({super.key});
 
   @override
   Widget build(BuildContext context) {

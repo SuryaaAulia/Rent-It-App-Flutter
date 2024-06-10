@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/payment_page.dart';
-import 'package:rent_it_flutter/page/topup_page.dart';
+import 'package:rent_it_flutter/pages/payment_page.dart';
+import 'package:rent_it_flutter/pages/topup_page.dart';
 import 'package:rent_it_flutter/widgets/icon_border_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +58,9 @@ class _RWalletState extends State<RWallet> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    const rWhite = Color.fromRGBO(236, 232, 232, 1);
+    const rRed = Color.fromRGBO(159, 21, 33, 1);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -90,8 +93,8 @@ class _RWalletState extends State<RWallet> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    RIconBorder(
-                        borderColor: const Color.fromRGBO(207, 207, 207, 1),
+                    const RIconBorder(
+                        borderColor: Color.fromRGBO(207, 207, 207, 1),
                         iconColor: rRed,
                         iconType: Icons.account_balance_wallet_outlined,
                         borderStyle: BoxShape.circle),
@@ -119,14 +122,14 @@ class _RWalletState extends State<RWallet> {
                               builder: (context) => const PaymentPage()),
                         );
                       },
-                      child: Column(
+                      child: const Column(
                         children: <Widget>[
                           RIconBorder(
                             borderColor: rRed,
                             iconColor: rWhite,
                             iconType: Icons.upgrade,
                             borderStyle: BoxShape.rectangle,
-                            radius: const BorderRadius.all(Radius.circular(4)),
+                            radius: BorderRadius.all(Radius.circular(4)),
                           ),
                           Text(
                             'Bayar',
@@ -143,14 +146,14 @@ class _RWalletState extends State<RWallet> {
                               builder: (context) => const TopUpPage()),
                         );
                       },
-                      child: Column(
+                      child: const Column(
                         children: <Widget>[
                           RIconBorder(
                             borderColor: rRed,
                             iconColor: rWhite,
                             iconType: Icons.add,
                             borderStyle: BoxShape.rectangle,
-                            radius: const BorderRadius.all(Radius.circular(4)),
+                            radius: BorderRadius.all(Radius.circular(4)),
                           ),
                           Text(
                             'Top-Up',

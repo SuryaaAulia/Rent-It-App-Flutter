@@ -41,8 +41,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:rent_it_flutter/page/login_page.dart';
-import 'package:rent_it_flutter/page/splash_screen.dart';
+import 'package:rent_it_flutter/pages/login_page.dart';
+import 'package:rent_it_flutter/pages/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
