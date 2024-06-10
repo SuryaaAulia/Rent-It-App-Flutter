@@ -41,7 +41,7 @@ class Pemesanan {
 
   factory Pemesanan.fromJson(Map<String, dynamic> json) {
     return Pemesanan(
-      id: json['id'],
+      id: json['pemesanan_id'],
       userId: json['user_id'],
       facilityId: json['facility_id'],
       kelasId: json['kelas_id'],

@@ -16,9 +16,10 @@ class PaymentPage extends StatefulWidget {
   State<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _PaymentPageState extends State<PaymentPage> {
-  List<Pemesanan> pemesanans = [];
-  int currentIndex = 0;
+  class _PaymentPageState extends State<PaymentPage> {
+    List<Pemesanan> pemesanans = [];
+    int currentIndex = 0;
+    int selectedId = 0;
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _PaymentPageState extends State<PaymentPage> {
       );
 
       if (response.statusCode == 200) {
+        // print(response.body);
         Map<String, dynamic> body = jsonDecode(response.body);
         List<dynamic> data = body['data'];
         List<Pemesanan> fetchedPemesanans =
@@ -46,6 +48,9 @@ class _PaymentPageState extends State<PaymentPage> {
 
         setState(() {
           pemesanans = fetchedPemesanans;
+          if (pemesanans.isNotEmpty) {
+          selectedId = pemesanans[0].id; // Tetapkan selectedId ke id pemesanan pertama
+        }
         });
       } else {
         print('Failed to fetch pemesanans: ${response.statusCode}');
@@ -57,21 +62,23 @@ class _PaymentPageState extends State<PaymentPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
+    print(selectedId);
+
     if (token != null) {
-      final response = await http.put(
+      final response = await http.post(
         Uri.parse(
-            'https://rent-it.site/api/auth/pemesanans/${pemesanans[currentIndex].id}'),
+            'https://rent-it.site/api/auth/payment'),
         headers: <String, String>{
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
         body: jsonEncode(<String, dynamic>{
-          'status': 'active', // Mengubah status pemesanan menjadi active
-        }),
+        'pemesanan_id': selectedId,
+      }),
       );
 
       if (response.statusCode == 200) {
-        // Status pemesanan berhasil diubah, tampilkan dialog sukses
+        print(response.body);
         Navigator.of(context).pop(); // Tutup dialog konfirmasi pembayaran
         showDialog(
           context: context,
@@ -142,10 +149,13 @@ class _PaymentPageState extends State<PaymentPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Fasilitas Yang Di Pinjam',
-                      style: TextStyle(
-                          fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: const Text(
+                        'Fasilitas Yang Di Pinjam',
+                        style: TextStyle(
+                            fontSize: 20, color: Color.fromRGBO(84, 78, 78, 1)),
+                      ),
                     ),
                     pemesanans.isEmpty
                         ? const CircularProgressIndicator()
@@ -191,6 +201,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               onPageChanged: (index, reason) {
                                 setState(() {
                                   currentIndex = index;
+                                  selectedId = pemesanans[index].id;
                                 });
                               },
                             ),
@@ -238,6 +249,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                     onPressed: () {
                                       // Panggil fungsi untuk konfirmasi pembayaran
                                       _confirmPayment();
+                                      Navigator.of(context).pop();
                                     },
                                     child: const Text(
                                       'Ya',

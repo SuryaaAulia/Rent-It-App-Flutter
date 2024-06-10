@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rent_it_flutter/page/payment_page.dart';
 import 'package:rent_it_flutter/page/topup_page.dart';
@@ -15,6 +17,7 @@ class RWallet extends StatefulWidget {
 }
 
 class _RWalletState extends State<RWallet> {
+  late final Timer _timer;
   final rWhite = const Color.fromRGBO(236, 232, 232, 1);
   final rRed = const Color.fromRGBO(159, 21, 33, 1);
   String balanceFormatted = '';
@@ -23,6 +26,16 @@ class _RWalletState extends State<RWallet> {
   void initState() {
     super.initState();
     _getWalletInfo();
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      _getWalletInfo();
+    });
+  } 
+  
+  @override
+  void dispose() {
+    // Hentikan timer saat widget di dispose untuk menghindari memory leak
+    _timer.cancel();
+    super.dispose();
   }
 
   Future<void> _getWalletInfo() async {
@@ -97,8 +110,7 @@ class _RWalletState extends State<RWallet> {
                         borderStyle: BoxShape.circle),
                     Text(
                       'Rp$balanceFormatted',
-                      // 'Test',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Color.fromRGBO(84, 78, 78, 1)),
