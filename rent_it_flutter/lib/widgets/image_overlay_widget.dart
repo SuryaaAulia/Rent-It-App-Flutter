@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class ROverlayImage extends StatelessWidget {
   const ROverlayImage({
-    super.key,
+    Key? key,
     required this.screenWidth,
     required this.screenHeight,
     required this.image,
-  });
+  }) : super(key: key);
 
   final double screenWidth;
   final double screenHeight;
-  final AssetImage image;
+  final ImageProvider image;
 
   @override
   Widget build(BuildContext context) {
