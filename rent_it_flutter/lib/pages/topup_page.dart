@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:rent_it_flutter/pages/home_page.dart';
-import 'package:rent_it_flutter/widgets/wallet_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
