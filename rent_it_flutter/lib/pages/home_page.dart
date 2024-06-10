@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const RentPage()),
+                                      builder: (context) => const RentFacilityScreen()),
                                 );
                               },
                               child: const Text('Sewa Fasilitas Sekarang!',
